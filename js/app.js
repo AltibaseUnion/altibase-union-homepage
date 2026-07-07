@@ -1,8 +1,9 @@
 const config = {
   CONSULT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
   REPORT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
-  NAVER_NOTICE_BOARD_URL: "https://cafe.naver.com/altibaseunion",
+  NAVER_NOTICE_BOARD_URL: "https://cafe.naver.com/altibaseunion/menu/11",
   NAVER_ACTIVITY_BOARD_URL: "https://cafe.naver.com/altibaseunion",
+  FALLBACK_POSTS_URL: "./data/posts.json",
   EMAIL: "altibaseUnion@gmail.com",
   NAVER_CAFE_URL: "https://cafe.naver.com/altibaseunion",
   COPYRIGHT: `Copyright © ${new Date().getFullYear()} Altibase 노동조합. All rights reserved.`,
@@ -35,26 +36,22 @@ const config = {
   ]
 };
 
-const fallbackLinks = {
-  cafe: "https://cafe.naver.com/altibaseunion",
-  form: "#"
+const embeddedFallbackPosts = {
+  notices: [
+    { title: "Altibase 노동조합 홈페이지를 준비하고 있습니다", date: "2026-07-07", url: "https://cafe.naver.com/altibaseunion" },
+    { title: "조합원 의견 수렴 창구 안내", date: "2026-07-03", url: "https://cafe.naver.com/altibaseunion" },
+    { title: "정기 소통 일정 및 참여 방법 안내", date: "2026-06-28", url: "https://cafe.naver.com/altibaseunion" },
+    { title: "노동조합 가입 및 문의 절차 안내", date: "2026-06-20", url: "https://cafe.naver.com/altibaseunion" },
+    { title: "개인정보 보호와 상담 접수 원칙 안내", date: "2026-06-14", url: "https://cafe.naver.com/altibaseunion" }
+  ],
+  activities: [
+    { title: "조합원 소통 채널 정비 진행", date: "2026-07-05", url: "https://cafe.naver.com/altibaseunion" },
+    { title: "근무환경 개선 의견 취합", date: "2026-06-30", url: "https://cafe.naver.com/altibaseunion" },
+    { title: "상담 및 제보 접수 체계 검토", date: "2026-06-24", url: "https://cafe.naver.com/altibaseunion" },
+    { title: "조합 운영 투명성 강화 방안 논의", date: "2026-06-18", url: "https://cafe.naver.com/altibaseunion" },
+    { title: "대외 노동단체 자료 검토", date: "2026-06-10", url: "https://cafe.naver.com/altibaseunion" }
+  ]
 };
-
-const sampleNoticeData = [
-  { title: "Altibase 노동조합 홈페이지를 준비하고 있습니다", date: "2026-07-07", url: fallbackLinks.cafe },
-  { title: "조합원 의견 수렴 창구 안내", date: "2026-07-03", url: fallbackLinks.cafe },
-  { title: "정기 소통 일정 및 참여 방법 안내", date: "2026-06-28", url: fallbackLinks.cafe },
-  { title: "노동조합 가입 및 문의 절차 안내", date: "2026-06-20", url: fallbackLinks.cafe },
-  { title: "개인정보 보호와 상담 접수 원칙 안내", date: "2026-06-14", url: fallbackLinks.cafe }
-];
-
-const sampleActivityData = [
-  { title: "조합원 소통 채널 정비 진행", date: "2026-07-05", url: fallbackLinks.cafe },
-  { title: "근무환경 개선 의견 취합", date: "2026-06-30", url: fallbackLinks.cafe },
-  { title: "상담 및 제보 접수 체계 검토", date: "2026-06-24", url: fallbackLinks.cafe },
-  { title: "조합 운영 투명성 강화 방안 논의", date: "2026-06-18", url: fallbackLinks.cafe },
-  { title: "대외 노동단체 자료 검토", date: "2026-06-10", url: fallbackLinks.cafe }
-];
 
 function isPlaceholder(value) {
   return !value || value.includes("PLACEHOLDER");
@@ -64,11 +61,23 @@ function resolveUrl(value, fallback = "#") {
   return isPlaceholder(value) ? fallback : value;
 }
 
+function normalizeText(value) {
+  return (value || "").replace(/\s+/g, " ").trim();
+}
+
+function toAbsoluteUrl(href, baseUrl) {
+  try {
+    return new URL(href, baseUrl).toString();
+  } catch (error) {
+    return baseUrl;
+  }
+}
+
 function sanitizePost(post) {
   return {
-    title: post.title || "제목 없음",
-    date: post.date || "",
-    url: resolveUrl(post.url, fallbackLinks.cafe)
+    title: normalizeText(post.title) || "제목 없음",
+    date: normalizeText(post.date),
+    url: resolveUrl(post.url, config.NAVER_CAFE_URL)
   };
 }
 
@@ -118,28 +127,129 @@ function renderQuickLinks() {
   `).join("");
 }
 
-async function fetchRecentPosts() {
-  // TODO: 네이버 카페 게시글을 Google Apps Script JSON API로 중계한 뒤 이 함수에서 fetch로 연결합니다.
-  // TODO: API 응답은 { notices: [{ title, date, url }], activities: [{ title, date, url }] } 형태를 권장합니다.
+async function loadFallbackPosts() {
+  if (typeof fetch !== "function") {
+    return embeddedFallbackPosts;
+  }
+
   try {
+    const response = await fetch(config.FALLBACK_POSTS_URL, { cache: "no-store" });
+
+    if (!response.ok) {
+      throw new Error(`fallback data HTTP ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.warn("fallback posts.json을 불러오지 못해 내장 샘플 데이터를 사용합니다.", error);
+    return embeddedFallbackPosts;
+  }
+}
+
+function extractDate(text) {
+  const normalized = normalizeText(text);
+  const fullDate = normalized.match(/\b(20\d{2})[.\-/](\d{1,2})[.\-/](\d{1,2})\b/);
+
+  if (fullDate) {
+    const [, year, month, day] = fullDate;
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  }
+
+  const shortDate = normalized.match(/\b(\d{1,2})[.](\d{1,2})\b/);
+
+  if (shortDate) {
+    const [, month, day] = shortDate;
+    return `${new Date().getFullYear()}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  }
+
+  return "";
+}
+
+function parseNaverCafePosts(html, boardUrl) {
+  if (typeof DOMParser !== "function") {
+    throw new Error("DOMParser is not available in this browser context.");
+  }
+
+  const document = new DOMParser().parseFromString(html, "text/html");
+  const selectors = [
+    "a.article",
+    "a[href*='ArticleRead']",
+    "a[href*='articleid=']",
+    "a[href*='menuid=']"
+  ];
+  const anchors = [...document.querySelectorAll(selectors.join(","))];
+  const seen = new Set();
+
+  return anchors.map((anchor) => {
+    const title = normalizeText(anchor.textContent);
+    const href = anchor.getAttribute("href");
+
+    if (!title || !href || seen.has(href)) {
+      return null;
+    }
+
+    seen.add(href);
+
+    const row = anchor.closest("tr, li, .article-board, .article-list") || anchor.parentElement;
+    const date = extractDate(row ? row.textContent : "");
+
     return {
-      notices: sampleNoticeData,
-      activities: sampleActivityData
+      title,
+      date,
+      url: toAbsoluteUrl(href, boardUrl)
+    };
+  }).filter(Boolean).filter((post) => post.title.length > 1).slice(0, 5);
+}
+
+async function fetchNaverCafeNoticePosts() {
+  if (typeof fetch !== "function") {
+    throw new Error("fetch is not available in this browser context.");
+  }
+
+  const response = await fetch(config.NAVER_NOTICE_BOARD_URL, {
+    credentials: "omit",
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    throw new Error(`Naver Cafe HTTP ${response.status}`);
+  }
+
+  const html = await response.text();
+  const posts = parseNaverCafePosts(html, config.NAVER_NOTICE_BOARD_URL);
+
+  if (posts.length === 0) {
+    throw new Error("Naver Cafe response did not contain parseable article links.");
+  }
+
+  return posts;
+}
+
+async function fetchRecentPosts() {
+  const fallbackPosts = await loadFallbackPosts();
+
+  try {
+    const notices = await fetchNaverCafeNoticePosts();
+
+    return {
+      notices,
+      activities: fallbackPosts.activities || embeddedFallbackPosts.activities
     };
   } catch (error) {
-    console.warn("게시글 API를 불러오지 못해 sample data를 표시합니다.", error);
+    console.warn("네이버 카페 공지사항 자동 수집에 실패하여 fallback data를 표시합니다.", error);
+
     return {
-      notices: sampleNoticeData,
-      activities: sampleActivityData
+      notices: fallbackPosts.notices || embeddedFallbackPosts.notices,
+      activities: fallbackPosts.activities || embeddedFallbackPosts.activities
     };
   }
 }
 
 function setupExternalLinks() {
   const linkMap = {
-    noticeMoreLink: resolveUrl(config.NAVER_NOTICE_BOARD_URL, fallbackLinks.cafe),
-    activityMoreLink: resolveUrl(config.NAVER_ACTIVITY_BOARD_URL, fallbackLinks.cafe),
-    consultButton: resolveUrl(config.CONSULT_FORM_URL, fallbackLinks.form)
+    noticeMoreLink: resolveUrl(config.NAVER_NOTICE_BOARD_URL, config.NAVER_CAFE_URL),
+    activityMoreLink: resolveUrl(config.NAVER_ACTIVITY_BOARD_URL, config.NAVER_CAFE_URL),
+    consultButton: resolveUrl(config.CONSULT_FORM_URL, "#")
   };
 
   Object.entries(linkMap).forEach(([id, url]) => {
@@ -161,7 +271,7 @@ function setupFooter() {
   }
 
   if (cafeLink) {
-    cafeLink.href = resolveUrl(config.NAVER_CAFE_URL, fallbackLinks.cafe);
+    cafeLink.href = resolveUrl(config.NAVER_CAFE_URL, config.NAVER_CAFE_URL);
   }
 
   if (copyrightText) {
