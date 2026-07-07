@@ -1,19 +1,61 @@
 # Altibase 노동조합 홈페이지
 
-Altibase 노동조합 공식 포털로 사용할 수 있는 정적 홈페이지입니다. GitHub Pages에서 무료로 운영할 수 있도록 HTML, CSS, Vanilla JavaScript, Bootstrap 5 CDN, Lucide Icons CDN만 사용하며 별도 빌드 도구는 필요하지 않습니다.
+Altibase 공식 홈페이지와 톤을 맞춘 노동조합 공식 홈페이지입니다. 신뢰, 전문성, 소통, 안정감을 목표로 하는 정적 홈페이지이며 GitHub Pages에서 운영합니다.
 
-## 1. 프로젝트 개요
+운영 사이트: https://altibaseunion.github.io/altibase-union-homepage/
 
-- 홈, 조합소식, 상담·제보 메뉴를 제공하는 단일 페이지 홈페이지입니다.
-- 공지사항과 활동보고는 현재 `js/app.js`의 샘플 데이터로 표시합니다.
-- 원본 게시글은 네이버 카페에 두고, 향후 Google Apps Script JSON API를 통해 자동 연동할 수 있도록 함수 구조를 분리했습니다.
-- 상담하기와 제보하기 버튼은 Google Forms 링크로 교체해 사용할 수 있습니다.
+## 프로젝트 구조
 
-## 2. 로컬 미리보기 방법
+```text
+.
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── app.js
+├── images/
+│   ├── hero.png
+│   ├── favicon.ico
+│   ├── favicon.png
+│   ├── logo-symbol.png
+│   └── logo.png
+└── README.md
+```
 
-가장 간단한 방법은 `index.html` 파일을 브라우저에서 직접 여는 것입니다.
+## 브랜치 전략
 
-로컬 서버로 확인하려면 프로젝트 폴더에서 다음 중 하나를 사용할 수 있습니다.
+- `main`: 운영 배포용 브랜치입니다. GitHub Pages 배포 소스로 사용합니다.
+- `develop`: 개발 작업용 브랜치입니다. 모든 수정은 develop에서 진행합니다.
+- 사용자의 검토 및 승인 전에는 main으로 merge하지 않습니다.
+- main에는 직접 commit하지 않습니다.
+
+권장 작업 흐름:
+
+```bash
+git switch develop
+git pull --rebase origin develop
+# 작업 및 테스트
+git add .
+git commit -m "refactor: improve homepage quality"
+git push origin develop
+```
+
+이후 GitHub에서 develop → main Pull Request를 만들고 검토 후 병합합니다.
+
+## GitHub Pages 배포
+
+1. develop에서 작업을 완료하고 검토를 받습니다.
+2. develop을 main으로 병합합니다.
+3. GitHub 저장소의 `Settings` → `Pages`에서 배포 소스를 확인합니다.
+4. 배포 소스는 `main` 브랜치의 `/root`를 사용합니다.
+
+정적 파일은 상대경로(`./css/style.css`, `./js/app.js`, `./images/...`)를 사용하므로 GitHub Pages 하위 경로에서도 동작합니다.
+
+## 로컬 미리보기
+
+브라우저에서 `index.html`을 직접 열어도 확인할 수 있습니다.
+
+로컬 서버로 확인하려면 프로젝트 폴더에서 다음 명령을 실행합니다.
 
 ```bash
 python -m http.server 8000
@@ -21,65 +63,59 @@ python -m http.server 8000
 
 브라우저에서 `http://localhost:8000`으로 접속합니다.
 
-## 3. GitHub Pages 배포 방법
+## Hero 이미지 교체 방법
 
-1. 이 프로젝트를 GitHub 저장소에 push합니다.
-2. GitHub 저장소의 `Settings`로 이동합니다.
-3. `Pages` 메뉴에서 배포 소스를 선택합니다.
-4. `Deploy from a branch`를 선택하고 `main` 브랜치의 `/root`를 지정합니다.
-5. 저장 후 표시되는 GitHub Pages 주소로 접속합니다.
+Hero 이미지는 `images/hero.png` 한 장만 교체하면 됩니다.
 
-모든 정적 파일은 상대경로(`./css/style.css`, `./js/app.js`)를 사용하므로 GitHub Pages에서도 경로가 깨지지 않습니다.
+- 파일명: `hero.png`
+- 위치: `images/hero.png`
+- 권장 비율: 16:9 또는 21:9
+- PC 높이: 최대 420px 이하
+- 모바일 높이: 최대 320px 이하
 
-## 4. Hero 이미지 교체 방법
+이미지 위에 네이비 계열 오버레이가 적용되어 있으므로, 너무 어둡거나 텍스트가 많은 이미지는 피하는 것이 좋습니다.
 
-Hero 영역은 `images/hero.png` 파일이 있으면 자동으로 배경 이미지로 사용합니다.
+## Placeholder 교체 방법
 
-1. 사용할 이미지를 `hero.png` 이름으로 준비합니다.
-2. `images/hero.png` 경로에 파일을 넣습니다.
-3. 이미지가 없거나 로드되지 않는 경우 네이비 계열 gradient 배경이 자연스럽게 표시됩니다.
-
-권장 비율은 16:9 또는 21:9이며, PC 기준 Hero 높이는 420px 이하, 모바일 기준 320px 이하로 제한되어 있습니다.
-
-현재 교체 전 Hero 이미지는 `images/hero-previous.png`로 백업되어 있습니다.
-
-로고 이미지는 다음 경로에서 사용합니다.
-
-- `images/logo.png`: 투명 배경으로 처리한 전체 로고 보관용
-- `images/logo-symbol.png`: 투명 배경으로 처리한 상단 네비게이션 심볼 로고
-- `images/favicon.png`, `images/favicon.ico`: 글자 없는 심볼 로고를 크게 보이도록 만든 브라우저 탭 아이콘
-
-## 5. Google Form URL 교체 방법
-
-`js/app.js` 상단의 아래 값을 실제 Google Forms 주소로 교체합니다.
+운영에 필요한 값은 `js/app.js` 상단의 `config` 객체에서 관리합니다.
 
 ```js
-const CONSULT_FORM_URL = "PLACEHOLDER";
-const REPORT_FORM_URL = "PLACEHOLDER";
+const config = {
+  CONSULT_FORM_URL: "CONSULT_FORM_URL_PLACEHOLDER",
+  REPORT_FORM_URL: "REPORT_FORM_URL_PLACEHOLDER",
+  NAVER_NOTICE_BOARD_URL: "NAVER_NOTICE_BOARD_URL_PLACEHOLDER",
+  NAVER_ACTIVITY_BOARD_URL: "NAVER_ACTIVITY_BOARD_URL_PLACEHOLDER",
+  EMAIL: "EMAIL_PLACEHOLDER",
+  NAVER_CAFE_URL: "NAVER_CAFE_URL_PLACEHOLDER",
+  COPYRIGHT: "COPYRIGHT_PLACEHOLDER",
+  QUICK_LINKS: []
+};
 ```
 
-- `CONSULT_FORM_URL`: 상담하기 버튼
-- `REPORT_FORM_URL`: 제보하기 버튼
+Placeholder 상태여도 화면이 깨지지 않도록 기본 fallback을 둡니다. 운영 배포 전에는 실제 URL과 이메일로 교체하는 것을 권장합니다.
 
-두 버튼은 새 창에서 열립니다.
+## Quick Links 관리
 
-## 6. 네이버 카페 게시판 URL 교체 방법
-
-`js/app.js` 상단의 아래 값을 실제 네이버 카페 게시판 주소로 교체합니다.
+Quick Links는 `config.QUICK_LINKS` 배열에서 관리합니다.
 
 ```js
-const NAVER_NOTICE_BOARD_URL = "PLACEHOLDER";
-const NAVER_ACTIVITY_BOARD_URL = "PLACEHOLDER";
+{
+  title: "화섬식품노조 홈페이지",
+  icon: "building-2",
+  url: "KCTFU_URL_PLACEHOLDER"
+}
 ```
 
-- `NAVER_NOTICE_BOARD_URL`: 최근 공지사항 더보기
-- `NAVER_ACTIVITY_BOARD_URL`: 최근 활동보고 더보기
+아이콘은 Lucide Icons 이름을 사용합니다. 링크를 추가하려면 객체를 하나 더 추가하면 됩니다.
 
-샘플 게시글 URL도 필요에 따라 `sampleNoticeData`, `sampleActivityData` 안에서 교체할 수 있습니다.
+## 게시글 데이터
 
-## 7. 향후 Apps Script 연동 예정 위치
+현재는 자동 연동을 구현하지 않습니다. 공지사항과 활동보고는 `js/app.js`의 샘플 배열에서 표시합니다.
 
-외부 게시글 연동은 `js/app.js`의 `fetchRecentPosts()` 함수에서 처리하도록 준비되어 있습니다.
+- `sampleNoticeData`: 최근 공지사항 5개
+- `sampleActivityData`: 최근 활동보고 5개
+
+향후 네이버 카페 또는 Google Apps Script JSON API를 붙일 때는 `fetchRecentPosts()` 함수 내부만 교체합니다.
 
 ```js
 async function fetchRecentPosts() {
@@ -87,35 +123,20 @@ async function fetchRecentPosts() {
 }
 ```
 
-향후 Google Apps Script에서 다음 형태의 JSON을 반환하도록 만들면 현재 렌더링 함수를 그대로 사용할 수 있습니다.
+이번 작업에서는 다음 기능을 구현하지 않습니다.
 
-```json
-{
-  "notices": [
-    { "title": "공지 제목", "date": "2026-07-07", "url": "https://..." }
-  ],
-  "activities": [
-    { "title": "활동보고 제목", "date": "2026-07-07", "url": "https://..." }
-  ]
-}
-```
+- 네이버 카페 자동 연동
+- Apps Script
+- RSS
+- 검색
+- 로그인
+- 관리자 기능
 
-상담과 제보는 하나의 Google Forms 창구(`https://forms.gle/43E4x14eWB6X8oAF7`)로 접수합니다. 분리된 접수 폼이 생기기 전까지는 한 창구로 유지하는 것이 사용자 혼선을 줄입니다.
+## 유지보수 체크리스트
 
-바로가기 항목은 `quickLinks` 배열에서 관리합니다. 현재 등록된 링크는 다음과 같습니다.
-
-- 화섬식품노동조합 홈페이지: `https://kctfu.org/`
-- 화섬식품노조 YouTube: `https://www.youtube.com/@kctfu`
-- 법률 상담: `https://kctfu.org/bbs/board.php?bo_table=law`
-- 노사협의회 안건 수집: `https://forms.gle/B3wFFgtCZ2phSn3b7`
-- 상담 및 제보: `https://forms.gle/43E4x14eWB6X8oAF7`
-
-```js
-const quickLinks = [
-  {
-    title: "화섬식품노동조합 홈페이지",
-    image: "./images/kctfu-symbol.png",
-    url: "https://kctfu.org/"
-  }
-];
-```
+- develop 브랜치에서 작업했는지 확인합니다.
+- `index.html`의 상대경로가 `./` 기준인지 확인합니다.
+- `js/app.js` 문법 오류가 없는지 확인합니다.
+- 공지사항 5개, 활동보고 5개, Quick Links가 표시되는지 확인합니다.
+- 모바일에서 Hero와 카드가 겹치지 않는지 확인합니다.
+- 운영 배포 전 Placeholder 값을 실제 값으로 교체했는지 확인합니다.

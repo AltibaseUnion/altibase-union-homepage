@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg fixed-top bg-white border-bottom shadow-sm" aria-label="주요 메뉴">
+    <a class="skip-link" href="#mainContent">본문 바로가기</a>
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-white border-bottom" aria-label="주요 메뉴">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#home" aria-label="Altibase 노동조합 홈">
           <img class="brand-symbol" src="./images/logo-symbol.png" alt="">
@@ -26,14 +28,15 @@
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link" href="#home">홈</a></li>
             <li class="nav-item"><a class="nav-link" href="#news">조합소식</a></li>
-            <li class="nav-item"><a class="nav-link" href="#portal-actions">상담·제보</a></li>
+            <li class="nav-item"><a class="nav-link" href="#quickLinks">바로가기</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">상담·제보</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <main id="home">
-      <section class="hero-section d-flex align-items-center">
+    <main id="mainContent">
+      <section id="home" class="hero-section d-flex align-items-center">
         <div class="container position-relative">
           <div class="hero-content">
             <p class="section-eyebrow text-white-50 mb-3">Official Union Portal</p>
@@ -48,57 +51,63 @@
         </div>
       </section>
 
-      <section id="news" class="section-pad portal-section">
+      <section id="news" class="section-pad">
         <div class="container">
-          <div class="row g-4 align-items-start">
-            <div class="col-xl-8">
-              <div class="row g-4">
-                <div class="col-lg-6">
-                  <div class="section-panel h-100">
-                    <div class="panel-heading">
-                      <div>
-                        <p class="section-eyebrow">Notice</p>
-                        <h2>최근 공지사항</h2>
-                      </div>
-                      <a class="btn btn-outline-primary btn-sm" id="noticeMoreLink" href="#" target="_blank" rel="noopener">더보기</a>
-                    </div>
-                    <div id="noticeList" class="post-list" aria-live="polite"></div>
+          <div class="section-heading">
+            <p class="section-eyebrow">Union News</p>
+            <h2>조합소식</h2>
+          </div>
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <section class="section-panel h-100" aria-labelledby="noticeHeading">
+                <div class="panel-heading">
+                  <div>
+                    <p class="section-eyebrow">Notice</p>
+                    <h3 id="noticeHeading">최근 공지사항</h3>
                   </div>
+                  <a class="btn btn-outline-primary btn-sm" id="noticeMoreLink" href="#" target="_blank" rel="noopener">더보기</a>
                 </div>
-                <div class="col-lg-6">
-                  <div class="section-panel h-100">
-                    <div class="panel-heading">
-                      <div>
-                        <p class="section-eyebrow">Activity</p>
-                        <h2>최근 활동보고</h2>
-                      </div>
-                      <a class="btn btn-outline-primary btn-sm" id="activityMoreLink" href="#" target="_blank" rel="noopener">더보기</a>
-                    </div>
-                    <div id="activityList" class="post-list" aria-live="polite"></div>
+                <div id="noticeList" class="post-list" aria-live="polite"></div>
+              </section>
+            </div>
+            <div class="col-lg-6">
+              <section class="section-panel h-100" aria-labelledby="activityHeading">
+                <div class="panel-heading">
+                  <div>
+                    <p class="section-eyebrow">Activity</p>
+                    <h3 id="activityHeading">최근 활동보고</h3>
                   </div>
+                  <a class="btn btn-outline-primary btn-sm" id="activityMoreLink" href="#" target="_blank" rel="noopener">더보기</a>
                 </div>
+                <div id="activityList" class="post-list" aria-live="polite"></div>
+              </section>
+            </div>
+          </div>
+
+          <section id="quickLinks" class="quick-section" aria-labelledby="quickLinksHeading">
+            <div class="panel-heading">
+              <div>
+                <p class="section-eyebrow">Quick Links</p>
+                <h3 id="quickLinksHeading">바로가기</h3>
               </div>
             </div>
-            <aside class="col-xl-4" id="portal-actions">
-              <div class="side-stack">
-                <section class="section-panel action-panel">
-                  <p class="section-eyebrow">Consultation & Report</p>
-                  <h2>상담 및 제보</h2>
-                  <p class="contact-copy">노동조건, 조직문화, 제도 개선 등 조합과 논의하고 싶은 내용을 하나의 창구로 안전하게 접수합니다.</p>
-                  <div class="contact-actions compact-actions">
-                    <a class="btn btn-primary" id="consultButton" href="#" target="_blank" rel="noopener">
-                      <i data-lucide="message-circle" aria-hidden="true"></i>
-                      상담 및 제보하기
-                    </a>
-                  </div>
-                </section>
-                <section class="section-panel quick-panel">
-                  <p class="section-eyebrow">Quick Links</p>
-                  <h2>바로가기</h2>
-                  <div id="quickLinksList" class="quick-links-stack"></div>
-                </section>
-              </div>
-            </aside>
+            <div id="quickLinksList" class="quick-links-grid"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-band">
+        <div class="container">
+          <div class="contact-band-inner">
+            <div>
+              <p class="section-eyebrow">Consultation & Report</p>
+              <h2>상담 및 제보</h2>
+              <p>노동조건, 조직문화, 제도 개선 등 조합과 논의하고 싶은 내용을 안전하게 접수합니다.</p>
+            </div>
+            <a class="btn btn-primary" id="consultButton" href="#" target="_blank" rel="noopener">
+              <i data-lucide="message-circle" aria-hidden="true"></i>
+              상담 및 제보하기
+            </a>
           </div>
         </div>
       </section>
@@ -109,11 +118,11 @@
         <div class="row g-3 align-items-center">
           <div class="col-lg-6">
             <strong>Altibase 노동조합</strong>
-            <p class="mb-0">문의 이메일 <a href="mailto:altibaseUnion@gmail.com">altibaseUnion@gmail.com</a></p>
+            <p class="mb-0">문의 이메일 <a id="footerEmailLink" href="#">EMAIL_PLACEHOLDER</a></p>
           </div>
           <div class="col-lg-6 text-lg-end">
-            <a href="https://cafe.naver.com/altibaseunion" target="_blank" rel="noopener">네이버 카페</a>
-            <p class="mb-0 small text-white-50">Copyright &copy; <span id="copyrightYear"></span> Altibase 노동조합. All rights reserved.</p>
+            <a id="footerCafeLink" href="#" target="_blank" rel="noopener">네이버 카페</a>
+            <p class="mb-0 small text-white-50" id="copyrightText">COPYRIGHT_PLACEHOLDER</p>
           </div>
         </div>
       </div>
