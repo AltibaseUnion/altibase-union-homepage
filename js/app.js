@@ -1,26 +1,36 @@
 const config = {
-  CONSULT_FORM_URL: "CONSULT_FORM_URL_PLACEHOLDER",
-  REPORT_FORM_URL: "REPORT_FORM_URL_PLACEHOLDER",
-  NAVER_NOTICE_BOARD_URL: "NAVER_NOTICE_BOARD_URL_PLACEHOLDER",
-  NAVER_ACTIVITY_BOARD_URL: "NAVER_ACTIVITY_BOARD_URL_PLACEHOLDER",
-  EMAIL: "EMAIL_PLACEHOLDER",
-  NAVER_CAFE_URL: "NAVER_CAFE_URL_PLACEHOLDER",
-  COPYRIGHT: "COPYRIGHT_PLACEHOLDER",
+  CONSULT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
+  REPORT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
+  NAVER_NOTICE_BOARD_URL: "https://cafe.naver.com/altibaseunion",
+  NAVER_ACTIVITY_BOARD_URL: "https://cafe.naver.com/altibaseunion",
+  EMAIL: "altibaseUnion@gmail.com",
+  NAVER_CAFE_URL: "https://cafe.naver.com/altibaseunion",
+  COPYRIGHT: `Copyright © ${new Date().getFullYear()} Altibase 노동조합. All rights reserved.`,
   QUICK_LINKS: [
     {
-      title: "화섬식품노조 홈페이지",
+      title: "화섬식품노동조합 홈페이지",
       icon: "building-2",
-      url: "KCTFU_URL_PLACEHOLDER"
+      url: "https://kctfu.org/"
     },
     {
       title: "화섬식품노조 YouTube",
       icon: "youtube",
-      url: "KCTFU_YOUTUBE_URL_PLACEHOLDER"
+      url: "https://www.youtube.com/@kctfu"
     },
     {
-      title: "Altibase Union 네이버 카페",
-      icon: "messages-square",
-      url: "NAVER_CAFE_URL_PLACEHOLDER"
+      title: "법률 상담",
+      icon: "scale",
+      url: "https://kctfu.org/bbs/board.php?bo_table=law"
+    },
+    {
+      title: "노사협의회 안건 수집",
+      icon: "clipboard-list",
+      url: "https://forms.gle/B3wFFgtCZ2phSn3b7"
+    },
+    {
+      title: "상담 및 제보",
+      icon: "message-circle",
+      url: "https://forms.gle/43E4x14eWB6X8oAF7"
     }
   ]
 };
@@ -146,12 +156,12 @@ function setupFooter() {
   const copyrightText = document.getElementById("copyrightText");
 
   if (emailLink) {
-    emailLink.href = isPlaceholder(config.EMAIL) ? "#" : `mailto:${config.EMAIL}`;
+    emailLink.href = `mailto:${config.EMAIL}`;
     emailLink.textContent = config.EMAIL;
   }
 
   if (cafeLink) {
-    cafeLink.href = resolveUrl(config.NAVER_CAFE_URL, "#");
+    cafeLink.href = resolveUrl(config.NAVER_CAFE_URL, fallbackLinks.cafe);
   }
 
   if (copyrightText) {

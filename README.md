@@ -75,24 +75,23 @@ Hero 이미지는 `images/hero.png` 한 장만 교체하면 됩니다.
 
 이미지 위에 네이비 계열 오버레이가 적용되어 있으므로, 너무 어둡거나 텍스트가 많은 이미지는 피하는 것이 좋습니다.
 
-## Placeholder 교체 방법
+## 운영 링크 관리
 
 운영에 필요한 값은 `js/app.js` 상단의 `config` 객체에서 관리합니다.
 
 ```js
 const config = {
-  CONSULT_FORM_URL: "CONSULT_FORM_URL_PLACEHOLDER",
-  REPORT_FORM_URL: "REPORT_FORM_URL_PLACEHOLDER",
-  NAVER_NOTICE_BOARD_URL: "NAVER_NOTICE_BOARD_URL_PLACEHOLDER",
-  NAVER_ACTIVITY_BOARD_URL: "NAVER_ACTIVITY_BOARD_URL_PLACEHOLDER",
-  EMAIL: "EMAIL_PLACEHOLDER",
-  NAVER_CAFE_URL: "NAVER_CAFE_URL_PLACEHOLDER",
-  COPYRIGHT: "COPYRIGHT_PLACEHOLDER",
+  CONSULT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
+  REPORT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
+  NAVER_NOTICE_BOARD_URL: "https://cafe.naver.com/altibaseunion",
+  NAVER_ACTIVITY_BOARD_URL: "https://cafe.naver.com/altibaseunion",
+  EMAIL: "altibaseUnion@gmail.com",
+  NAVER_CAFE_URL: "https://cafe.naver.com/altibaseunion",
   QUICK_LINKS: []
 };
 ```
 
-Placeholder 상태여도 화면이 깨지지 않도록 기본 fallback을 둡니다. 운영 배포 전에는 실제 URL과 이메일로 교체하는 것을 권장합니다.
+링크를 교체할 때는 이 객체의 값만 수정하면 됩니다. 기존 운영 링크를 바꿀 때는 main 병합 전 develop에서 먼저 확인합니다.
 
 ## Quick Links 관리
 
@@ -100,9 +99,9 @@ Quick Links는 `config.QUICK_LINKS` 배열에서 관리합니다.
 
 ```js
 {
-  title: "화섬식품노조 홈페이지",
+  title: "화섬식품노동조합 홈페이지",
   icon: "building-2",
-  url: "KCTFU_URL_PLACEHOLDER"
+  url: "https://kctfu.org/"
 }
 ```
 
@@ -139,4 +138,4 @@ async function fetchRecentPosts() {
 - `js/app.js` 문법 오류가 없는지 확인합니다.
 - 공지사항 5개, 활동보고 5개, Quick Links가 표시되는지 확인합니다.
 - 모바일에서 Hero와 카드가 겹치지 않는지 확인합니다.
-- 운영 배포 전 Placeholder 값을 실제 값으로 교체했는지 확인합니다.
+- 운영 배포 전 `config` 링크가 의도한 운영 URL인지 확인합니다.
