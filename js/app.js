@@ -1,54 +1,75 @@
-const NAVER_NOTICE_BOARD_URL = "PLACEHOLDER";
-const NAVER_ACTIVITY_BOARD_URL = "PLACEHOLDER";
-const CONSULT_FORM_URL = "https://forms.gle/43E4x14eWB6X8oAF7";
-const REPORT_FORM_URL = CONSULT_FORM_URL;
+const config = {
+  CONSULT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
+  REPORT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
+  NAVER_NOTICE_BOARD_URL: "https://cafe.naver.com/altibaseunion",
+  NAVER_ACTIVITY_BOARD_URL: "https://cafe.naver.com/altibaseunion",
+  EMAIL: "altibaseUnion@gmail.com",
+  NAVER_CAFE_URL: "https://cafe.naver.com/altibaseunion",
+  COPYRIGHT: `Copyright © ${new Date().getFullYear()} Altibase 노동조합. All rights reserved.`,
+  QUICK_LINKS: [
+    {
+      title: "화섬식품노동조합 홈페이지",
+      icon: "building-2",
+      url: "https://kctfu.org/"
+    },
+    {
+      title: "화섬식품노조 YouTube",
+      icon: "youtube",
+      url: "https://www.youtube.com/@kctfu"
+    },
+    {
+      title: "법률 상담",
+      icon: "scale",
+      url: "https://kctfu.org/bbs/board.php?bo_table=law"
+    },
+    {
+      title: "노사협의회 안건 수집",
+      icon: "clipboard-list",
+      url: "https://forms.gle/B3wFFgtCZ2phSn3b7"
+    },
+    {
+      title: "상담 및 제보",
+      icon: "message-circle",
+      url: "https://forms.gle/43E4x14eWB6X8oAF7"
+    }
+  ]
+};
+
+const fallbackLinks = {
+  cafe: "https://cafe.naver.com/altibaseunion",
+  form: "#"
+};
 
 const sampleNoticeData = [
-  { title: "Altibase 노동조합 홈페이지를 준비하고 있습니다", date: "2026-07-07", url: "https://cafe.naver.com/altibaseunion" },
-  { title: "조합원 의견 수렴 창구 안내", date: "2026-07-03", url: "https://cafe.naver.com/altibaseunion" },
-  { title: "정기 소통 일정 및 참여 방법 안내", date: "2026-06-28", url: "https://cafe.naver.com/altibaseunion" },
-  { title: "노동조합 가입 및 문의 절차 안내", date: "2026-06-20", url: "https://cafe.naver.com/altibaseunion" },
-  { title: "개인정보 보호와 상담 접수 원칙 안내", date: "2026-06-14", url: "https://cafe.naver.com/altibaseunion" }
+  { title: "Altibase 노동조합 홈페이지를 준비하고 있습니다", date: "2026-07-07", url: fallbackLinks.cafe },
+  { title: "조합원 의견 수렴 창구 안내", date: "2026-07-03", url: fallbackLinks.cafe },
+  { title: "정기 소통 일정 및 참여 방법 안내", date: "2026-06-28", url: fallbackLinks.cafe },
+  { title: "노동조합 가입 및 문의 절차 안내", date: "2026-06-20", url: fallbackLinks.cafe },
+  { title: "개인정보 보호와 상담 접수 원칙 안내", date: "2026-06-14", url: fallbackLinks.cafe }
 ];
 
 const sampleActivityData = [
-  { title: "조합원 소통 채널 정비 진행", date: "2026-07-05", url: "https://cafe.naver.com/altibaseunion" },
-  { title: "근무환경 개선 의견 취합", date: "2026-06-30", url: "https://cafe.naver.com/altibaseunion" },
-  { title: "상담 및 제보 접수 체계 검토", date: "2026-06-24", url: "https://cafe.naver.com/altibaseunion" },
-  { title: "조합 운영 투명성 강화 방안 논의", date: "2026-06-18", url: "https://cafe.naver.com/altibaseunion" },
-  { title: "대외 노동단체 자료 검토", date: "2026-06-10", url: "https://cafe.naver.com/altibaseunion" }
+  { title: "조합원 소통 채널 정비 진행", date: "2026-07-05", url: fallbackLinks.cafe },
+  { title: "근무환경 개선 의견 취합", date: "2026-06-30", url: fallbackLinks.cafe },
+  { title: "상담 및 제보 접수 체계 검토", date: "2026-06-24", url: fallbackLinks.cafe },
+  { title: "조합 운영 투명성 강화 방안 논의", date: "2026-06-18", url: fallbackLinks.cafe },
+  { title: "대외 노동단체 자료 검토", date: "2026-06-10", url: fallbackLinks.cafe }
 ];
 
-const quickLinks = [
-  {
-    title: "화섬식품노동조합 홈페이지",
-    image: "./images/kctfu-symbol.png",
-    url: "https://kctfu.org/"
-  },
-  {
-    title: "화섬식품노조 YouTube",
-    image: "./images/youtube.svg",
-    url: "https://www.youtube.com/@kctfu"
-  },
-  {
-    title: "법률 상담",
-    icon: "scale",
-    url: "https://kctfu.org/bbs/board.php?bo_table=law"
-  },
-  {
-    title: "노사협의회 안건 수집",
-    icon: "clipboard-list",
-    url: "https://forms.gle/B3wFFgtCZ2phSn3b7"
-  },
-  {
-    title: "상담 및 제보",
-    icon: "message-circle",
-    url: CONSULT_FORM_URL
-  }
-];
+function isPlaceholder(value) {
+  return !value || value.includes("PLACEHOLDER");
+}
 
-function createPlaceholderUrl(url) {
-  return url === "PLACEHOLDER" ? "https://cafe.naver.com/altibaseunion" : url;
+function resolveUrl(value, fallback = "#") {
+  return isPlaceholder(value) ? fallback : value;
+}
+
+function sanitizePost(post) {
+  return {
+    title: post.title || "제목 없음",
+    date: post.date || "",
+    url: resolveUrl(post.url, fallbackLinks.cafe)
+  };
 }
 
 function renderPosts(containerId, posts, type) {
@@ -63,18 +84,16 @@ function renderPosts(containerId, posts, type) {
     return;
   }
 
-  container.innerHTML = posts.slice(0, 5).map((post) => {
-    const url = post.url || "https://cafe.naver.com/altibaseunion";
-    const title = post.title || "제목 없음";
-    const date = post.date || "";
+  container.innerHTML = posts.slice(0, 5).map((rawPost) => {
+    const post = sanitizePost(rawPost);
 
     return `
-      <a class="post-item" href="${url}" target="_blank" rel="noopener">
-        <p class="post-title">${title}</p>
+      <a class="post-item" href="${post.url}" target="_blank" rel="noopener">
+        <p class="post-title">${post.title}</p>
         <div class="post-meta">
           <span>${type}</span>
           <span aria-hidden="true">·</span>
-          <time datetime="${date}">${date}</time>
+          <time datetime="${post.date}">${post.date}</time>
         </div>
       </a>
     `;
@@ -88,28 +107,20 @@ function renderQuickLinks() {
     return;
   }
 
-  container.innerHTML = quickLinks.map((link) => {
-    const url = createPlaceholderUrl(link.url);
-    const icon = link.icon || "external-link";
-    const visual = link.image
-      ? `<span class="quick-image-box"><img src="${link.image}" alt=""></span>`
-      : `<span class="icon-box"><i data-lucide="${icon}" aria-hidden="true"></i></span>`;
-
-    return `
-      <a class="quick-link-card" href="${url}" target="_blank" rel="noopener">
-        ${visual}
-        <span>
-          <h3>${link.title}</h3>
-          <p>새 창에서 바로가기</p>
-        </span>
-      </a>
-    `;
-  }).join("");
+  container.innerHTML = config.QUICK_LINKS.map((link) => `
+    <a class="quick-link-card" href="${resolveUrl(link.url, "#")}" target="_blank" rel="noopener">
+      <span class="icon-box"><i data-lucide="${link.icon || "external-link"}" aria-hidden="true"></i></span>
+      <span>
+        <h4>${link.title}</h4>
+        <p>새 창에서 바로가기</p>
+      </span>
+    </a>
+  `).join("");
 }
 
 async function fetchRecentPosts() {
   // TODO: 네이버 카페 게시글을 Google Apps Script JSON API로 중계한 뒤 이 함수에서 fetch로 연결합니다.
-  // TODO: API 응답 형식은 [{ title, date, url }] 형태로 맞추면 renderPosts 함수를 그대로 사용할 수 있습니다.
+  // TODO: API 응답은 { notices: [{ title, date, url }], activities: [{ title, date, url }] } 형태를 권장합니다.
   try {
     return {
       notices: sampleNoticeData,
@@ -125,40 +136,47 @@ async function fetchRecentPosts() {
 }
 
 function setupExternalLinks() {
-  const noticeMoreLink = document.getElementById("noticeMoreLink");
-  const activityMoreLink = document.getElementById("activityMoreLink");
-  const consultButton = document.getElementById("consultButton");
-  const reportButton = document.getElementById("reportButton");
+  const linkMap = {
+    noticeMoreLink: resolveUrl(config.NAVER_NOTICE_BOARD_URL, fallbackLinks.cafe),
+    activityMoreLink: resolveUrl(config.NAVER_ACTIVITY_BOARD_URL, fallbackLinks.cafe),
+    consultButton: resolveUrl(config.CONSULT_FORM_URL, fallbackLinks.form)
+  };
 
-  if (noticeMoreLink) {
-    noticeMoreLink.href = createPlaceholderUrl(NAVER_NOTICE_BOARD_URL);
+  Object.entries(linkMap).forEach(([id, url]) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.href = url;
+    }
+  });
+}
+
+function setupFooter() {
+  const emailLink = document.getElementById("footerEmailLink");
+  const cafeLink = document.getElementById("footerCafeLink");
+  const copyrightText = document.getElementById("copyrightText");
+
+  if (emailLink) {
+    emailLink.href = `mailto:${config.EMAIL}`;
+    emailLink.textContent = config.EMAIL;
   }
 
-  if (activityMoreLink) {
-    activityMoreLink.href = createPlaceholderUrl(NAVER_ACTIVITY_BOARD_URL);
+  if (cafeLink) {
+    cafeLink.href = resolveUrl(config.NAVER_CAFE_URL, fallbackLinks.cafe);
   }
 
-  if (consultButton) {
-    consultButton.href = createPlaceholderUrl(CONSULT_FORM_URL);
-  }
-
-  if (reportButton) {
-    reportButton.href = createPlaceholderUrl(REPORT_FORM_URL);
+  if (copyrightText) {
+    copyrightText.textContent = config.COPYRIGHT;
   }
 }
 
 async function init() {
   setupExternalLinks();
+  setupFooter();
   renderQuickLinks();
 
   const { notices, activities } = await fetchRecentPosts();
   renderPosts("noticeList", notices, "공지사항");
   renderPosts("activityList", activities, "활동보고");
-
-  const year = document.getElementById("copyrightYear");
-  if (year) {
-    year.textContent = new Date().getFullYear();
-  }
 
   if (window.lucide) {
     window.lucide.createIcons();
