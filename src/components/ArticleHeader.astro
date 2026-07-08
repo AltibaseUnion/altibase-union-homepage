@@ -1,0 +1,23 @@
+---
+import ArticleMeta from "./ArticleMeta.astro";
+
+interface Props {
+  post: any;
+}
+
+const { post } = Astro.props;
+const thumbnail = post.data.thumbnail;
+---
+
+<header class="article-header">
+  <span class="article-badge">{post.data.category}</span>
+  <h1>{post.data.title}</h1>
+  <ArticleMeta author={post.data.author} date={post.data.date} tags={post.data.tags} />
+  <p>{post.data.summary}</p>
+</header>
+
+{thumbnail && (
+  <figure class="article-hero-image">
+    <img src={thumbnail} alt="" loading="lazy" />
+  </figure>
+)}

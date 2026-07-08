@@ -188,6 +188,12 @@ GitHub Pages
 
 상세 작성 규칙은 [docs/posting-guide.md](docs/posting-guide.md)를 참고합니다.
 
+## Design Guide
+
+- 디자인 기준: [docs/design-system.md](docs/design-system.md)
+- 콘텐츠 작성 기준: [docs/content-guide.md](docs/content-guide.md)
+- 게시글 작성 실무 가이드: [docs/posting-guide.md](docs/posting-guide.md)
+
 ## 이번 구조에서 구현하지 않는 기능
 
 - 검색

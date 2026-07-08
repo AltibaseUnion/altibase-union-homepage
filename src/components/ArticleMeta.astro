@@ -1,0 +1,31 @@
+---
+import { formatDate } from "../data/site";
+import TagList from "./TagList.astro";
+
+interface Props {
+  author: string;
+  date: Date;
+  tags: string[];
+}
+
+const { author, date, tags } = Astro.props;
+---
+
+<div class="article-meta" aria-label="게시글 정보">
+  <span>
+    <i data-lucide="calendar-days" aria-hidden="true"></i>
+    <time datetime={date.toISOString()}>{formatDate(date)}</time>
+  </span>
+  <span>
+    <i data-lucide="user" aria-hidden="true"></i>
+    {author}
+  </span>
+  {tags?.length > 0 && (
+    <span>
+      <i data-lucide="tag" aria-hidden="true"></i>
+      {tags.length}개 태그
+    </span>
+  )}
+</div>
+
+<TagList tags={tags} />

@@ -1,0 +1,64 @@
+---
+import TagList from "./TagList.astro";
+
+interface Props {
+  tags: string[];
+  listHref: string;
+  previousPost?: any;
+  nextPost?: any;
+}
+
+const { tags, listHref, previousPost, nextPost } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const collection = listHref.includes("/activities/") ? "activities" : "notices";
+
+const getPostHref = (post: any) => post ? `${base}${collection}/${post.data.slug}/` : undefined;
+---
+
+<footer class="article-footer">
+  <TagList tags={tags} label="본문 태그" />
+
+  <div class="article-actions">
+    <a class="btn btn-outline-primary" href={listHref}>
+      <i data-lucide="list" aria-hidden="true"></i>
+      목록으로
+    </a>
+  </div>
+
+  <div class="article-pager" aria-label="이전글 다음글">
+    {previousPost ? (
+      <a class="pager-card" href={getPostHref(previousPost)}>
+        <span>
+          <i data-lucide="chevron-left" aria-hidden="true"></i>
+          이전글
+        </span>
+        <strong>{previousPost.data.title}</strong>
+      </a>
+    ) : (
+      <span class="pager-card is-disabled">
+        <span>
+          <i data-lucide="chevron-left" aria-hidden="true"></i>
+          이전글
+        </span>
+        <strong>이전글이 없습니다</strong>
+      </span>
+    )}
+    {nextPost ? (
+      <a class="pager-card text-end" href={getPostHref(nextPost)}>
+        <span>
+          다음글
+          <i data-lucide="chevron-right" aria-hidden="true"></i>
+        </span>
+        <strong>{nextPost.data.title}</strong>
+      </a>
+    ) : (
+      <span class="pager-card is-disabled text-end">
+        <span>
+          다음글
+          <i data-lucide="chevron-right" aria-hidden="true"></i>
+        </span>
+        <strong>다음글이 없습니다</strong>
+      </span>
+    )}
+  </div>
+</footer>
