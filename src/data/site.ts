@@ -10,7 +10,7 @@ export const siteConfig = {
   quickLinks: [
     {
       title: "화섬식품노동조합 홈페이지",
-      icon: "building-2",
+      icon: "globe",
       url: "https://kctfu.org/"
     },
     {
@@ -27,6 +27,16 @@ export const siteConfig = {
       title: "노사협의회 안건 수집",
       icon: "clipboard-list",
       url: "https://forms.gle/B3wFFgtCZ2phSn3b7"
+    },
+    {
+      title: "Altibase Union 네이버 카페",
+      icon: "users",
+      url: "https://cafe.naver.com/altibaseunion"
+    },
+    {
+      title: "카카오 채널",
+      icon: "message-circle",
+      url: "http://pf.kakao.com/_KgTen"
     }
   ]
 };

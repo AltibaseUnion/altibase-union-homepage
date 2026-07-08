@@ -1,0 +1,56 @@
+---
+import { formatDate } from "../data/site";
+
+interface Props {
+  post: any;
+  sectionLabel: string;
+  listHref: string;
+}
+
+const { post, sectionLabel, listHref } = Astro.props;
+const thumbnail = post.data.thumbnail;
+---
+
+<article class="article-page">
+  <div class="container">
+    <div class="article-shell">
+      <nav class="breadcrumb-nav" aria-label="breadcrumb">
+        <a href={import.meta.env.BASE_URL}>Home</a>
+        <span aria-hidden="true">/</span>
+        <a href={listHref}>{sectionLabel}</a>
+        <span aria-hidden="true">/</span>
+        <span>{post.data.title}</span>
+      </nav>
+
+      <header class="article-header">
+        <span class="article-badge">{post.data.category}</span>
+        <h1>{post.data.title}</h1>
+        <div class="article-meta">
+          <span>{post.data.author}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+        </div>
+        {post.data.tags?.length > 0 && (
+          <div class="article-tags" aria-label="태그">
+            {post.data.tags.map((tag: string) => <span>{tag}</span>)}
+          </div>
+        )}
+        <p>{post.data.summary}</p>
+      </header>
+
+      {thumbnail && (
+        <figure class="article-hero-image">
+          <img src={thumbnail} alt="" loading="lazy" />
+        </figure>
+      )}
+
+      <div class="article-body">
+        <slot />
+      </div>
+
+      <div class="article-actions">
+        <a class="btn btn-outline-primary" href={listHref}>목록으로</a>
+      </div>
+    </div>
+  </div>
+</article>

@@ -200,3 +200,10 @@ GitHub Pages
 - Apps Script
 - 네이버 카페 자동 연동
 - CMS
+
+## UI와 콘텐츠 운영 원칙
+
+- Quick Links는 `src/data/site.ts`의 `quickLinks` 배열에서 관리합니다.
+- Footer에는 외부 링크를 최소화하고, 네이버 카페와 카카오 채널 등 주요 외부 채널은 Quick Links에서 노출합니다.
+- 공지사항과 활동보고 상세 페이지는 Markdown 본문을 공통 Article Layout으로 표시합니다.
+- 게시글 본문에는 불필요한 HTML을 넣지 않고, breadcrumb, 메타 정보, 목록 버튼은 Layout에서 자동 처리합니다.
