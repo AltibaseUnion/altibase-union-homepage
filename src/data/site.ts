@@ -27,11 +27,6 @@ export const siteConfig = {
       title: "노사협의회 안건 수집",
       icon: "clipboard-list",
       url: "https://forms.gle/B3wFFgtCZ2phSn3b7"
-    },
-    {
-      title: "상담 및 제보",
-      icon: "message-circle",
-      url: "https://forms.gle/43E4x14eWB6X8oAF7"
     }
   ]
 };
