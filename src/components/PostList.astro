@@ -3,22 +3,20 @@ import { formatDate } from "../data/site";
 
 interface Props {
   eyebrow: string;
-  description: string;
   posts: any[];
   href: string;
   type: string;
 }
 
-const { eyebrow, description, posts, href, type } = Astro.props;
+const { eyebrow, posts, href, type } = Astro.props;
 ---
 
 <section class="section-panel h-100" aria-labelledby={`${type}Heading`}>
   <div class="panel-heading">
     <div>
       <p class="section-eyebrow">{eyebrow}</p>
-      <p class="panel-description" id={`${type}Heading`}>{description}</p>
     </div>
-    <a class="btn btn-outline-primary btn-sm" href={href}>더보기</a>
+    <a class="btn btn-outline-primary btn-sm" href={href} aria-label={`${eyebrow} 더보기`}>더보기</a>
   </div>
   <div class="post-list">
     {posts.map((post) => (

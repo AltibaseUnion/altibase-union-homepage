@@ -72,15 +72,15 @@ a {
   background:
     linear-gradient(90deg, rgba(15, 39, 71, 0.96), rgba(15, 39, 71, 0.76), rgba(15, 39, 71, 0.28)),
     linear-gradient(135deg, var(--union-navy), var(--union-blue));
-  max-height: 420px;
-  min-height: min(360px, calc(100vh - var(--nav-height)));
+  max-height: 370px;
+  min-height: min(320px, calc(100vh - var(--nav-height)));
   overflow: hidden;
   position: relative;
 }
 
 .hero-section::after {
   background-image: var(--hero-image);
-  background-position: center;
+  background-position: center 42%;
   background-size: cover;
   content: "";
   inset: 0;
@@ -134,11 +134,11 @@ a {
 }
 
 .section-pad {
-  padding: 48px 0;
+  padding: 44px 0;
 }
 
 .section-heading {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .section-heading h2,
@@ -175,7 +175,7 @@ a {
 .quick-section,
 .article-header,
 .article-body {
-  padding: 24px;
+  padding: 26px;
 }
 
 .panel-heading {
@@ -183,7 +183,7 @@ a {
   display: flex;
   gap: 18px;
   justify-content: space-between;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .panel-heading h3 {
@@ -203,16 +203,17 @@ a {
 .post-list,
 .content-list {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .post-item,
 .content-card {
-  border: 1px solid var(--union-border);
+  background: #fff;
+  border: 1px solid #dfe7f2;
   border-radius: var(--radius);
   color: var(--union-ink);
   display: block;
-  padding: 14px 15px;
+  padding: 18px 18px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -228,15 +229,18 @@ a {
 .post-item:focus,
 .content-card:hover,
 .content-card:focus {
-  border-color: rgba(23, 78, 166, 0.5);
-  box-shadow: 0 10px 22px rgba(23, 78, 166, 0.12);
+  border-color: rgba(23, 78, 166, 0.36);
+  box-shadow: 0 12px 24px rgba(15, 39, 71, 0.1);
   color: var(--union-ink);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .post-title,
 .content-card h2 {
+  color: var(--union-navy);
+  font-size: 1.02rem;
   font-weight: 700;
+  line-height: 1.45;
   margin: 0;
 }
 
@@ -262,7 +266,7 @@ a {
   display: flex;
   font-size: 0.88rem;
   gap: 8px;
-  margin-top: 7px;
+  margin-top: 10px;
 }
 
 .quick-section {
@@ -271,7 +275,7 @@ a {
 
 .quick-links-grid {
   display: grid;
-  gap: 14px;
+  gap: 12px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -280,6 +284,7 @@ a {
   color: var(--union-ink);
   display: flex;
   gap: 14px;
+  min-height: 86px;
   padding: 18px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
@@ -295,6 +300,7 @@ a {
 .quick-link-card h4 {
   font-size: 1rem;
   font-weight: 800;
+  line-height: 1.35;
   margin: 0;
 }
 
@@ -318,6 +324,7 @@ a {
 
 .icon-box svg {
   height: 24px;
+  stroke-width: 2;
   width: 24px;
 }
 
@@ -330,7 +337,11 @@ a {
   display: flex;
   gap: 24px;
   justify-content: space-between;
-  padding: 24px;
+  padding: 26px;
+}
+
+.contact-band-inner > div {
+  max-width: 620px;
 }
 
 .contact-band p {
@@ -345,6 +356,8 @@ a {
   flex: 0 0 auto;
   gap: 9px;
   justify-content: center;
+  min-width: 178px;
+  padding: 11px 18px;
 }
 
 .page-header {
@@ -671,8 +684,8 @@ a {
   }
 
   .hero-section {
-    max-height: 320px;
-    min-height: 300px;
+    max-height: 300px;
+    min-height: 280px;
   }
 
   .hero-title {
@@ -681,7 +694,7 @@ a {
 
   .section-pad,
   .article-page {
-    padding: 36px 0;
+    padding: 34px 0;
   }
 
   .section-panel,
@@ -703,6 +716,14 @@ a {
 
   .quick-link-card {
     padding: 16px;
+  }
+
+  .post-item {
+    padding: 17px 16px;
+  }
+
+  .contact-band .btn {
+    width: 100%;
   }
 
   .article-body {

@@ -1,5 +1,5 @@
 export const siteConfig = {
-  title: "Altibase 노동조합",
+  title: "Altibase Union",
   description: "Altibase 노동조합 공식 포털. 조합원 권익 보호, 소통과 참여, 투명한 활동을 위한 안내와 소식.",
   email: "altibaseUnion@gmail.com",
   naverCafeUrl: "https://cafe.naver.com/altibaseunion",
@@ -29,8 +29,8 @@ export const siteConfig = {
       url: "https://forms.gle/B3wFFgtCZ2phSn3b7"
     },
     {
-      title: "Altibase Union 네이버 카페",
-      icon: "users",
+      title: "네이버 카페",
+      icon: "messages-square",
       url: "https://cafe.naver.com/altibaseunion"
     },
     {
