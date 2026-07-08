@@ -16,7 +16,9 @@ const { title, posts, href, type } = Astro.props;
     <div>
       <h3 id={`${type}Heading`}>{title}</h3>
     </div>
-    <a class="btn btn-outline-primary btn-sm" href={href} aria-label={`${title} 더보기`}>더보기</a>
+    <a class="panel-more-link" href={href} aria-label={`${title} 전체보기`}>
+      전체보기 <span aria-hidden="true">→</span>
+    </a>
   </div>
   <div class="post-list">
     {posts.map((post) => (
