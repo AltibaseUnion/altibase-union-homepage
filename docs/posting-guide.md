@@ -81,3 +81,10 @@ Git
 ↓
 GitHub Pages
 ```
+
+## 표시 방식과 링크 관리
+
+- 공지사항과 활동보고 상세 페이지는 공통 Article Layout으로 표시됩니다.
+- Markdown 파일에는 본문 내용만 작성하고, breadcrumb, 메타 정보, 목록 버튼은 Layout에서 자동 처리합니다.
+- Quick Links는 `src/data/site.ts`의 `quickLinks` 배열에서 관리합니다.
+- Footer에는 외부 링크를 최소화하고, 네이버 카페와 카카오 채널 같은 외부 채널은 Quick Links에서 관리합니다.

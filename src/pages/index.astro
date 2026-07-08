@@ -27,10 +27,10 @@ const activityPosts = activities.map((post) => ({ ...post, url: toPostUrl("activ
       </div>
       <div class="row g-4">
         <div class="col-lg-6">
-          <PostList eyebrow="Notice" title="최근 공지사항" posts={noticePosts} href={`${import.meta.env.BASE_URL}notices/`} type="notice" />
+          <PostList eyebrow="Notice" description="조합원에게 필요한 주요 공지사항을 확인할 수 있습니다." posts={noticePosts} href={`${import.meta.env.BASE_URL}notices/`} type="notice" />
         </div>
         <div class="col-lg-6">
-          <PostList eyebrow="Activity" title="최근 활동보고" posts={activityPosts} href={`${import.meta.env.BASE_URL}activities/`} type="activity" />
+          <PostList eyebrow="Activity" description="최근 노동조합 활동과 주요 소식을 확인할 수 있습니다." posts={activityPosts} href={`${import.meta.env.BASE_URL}activities/`} type="activity" />
         </div>
       </div>
 
