@@ -1,150 +1,202 @@
-# Altibase 노동조합 홈페이지
+# Altibase Union 홈페이지
 
-Altibase 공식 홈페이지와 톤을 맞춘 노동조합 공식 홈페이지입니다. 신뢰, 전문성, 소통, 안정감을 목표로 하는 정적 홈페이지이며 GitHub Pages에서 운영합니다.
+Altibase 공식 홈페이지와 톤을 맞춘 노동조합 공식 홈페이지입니다. GitHub Pages에서 무료로 운영하며, Astro Content Collections와 Markdown을 사용해 게시물을 관리합니다.
 
 운영 사이트: https://altibaseunion.github.io/altibase-union-homepage/
+
+## 기술 스택
+
+- Astro
+- Bootstrap 5 CDN
+- Lucide Icons CDN
+- Markdown Content Collections
+- GitHub Pages
 
 ## 프로젝트 구조
 
 ```text
 .
-├── index.html
-├── css/
-│   └── style.css
-├── js/
-│   └── app.js
-├── data/
-│   └── posts.json
-├── images/
-│   ├── hero.png
-│   ├── favicon.ico
-│   ├── favicon.png
-│   ├── logo-symbol.png
-│   └── logo.png
+├── astro.config.mjs
+├── package.json
+├── src/
+│   ├── components/
+│   ├── data/
+│   ├── layouts/
+│   ├── pages/
+│   └── styles/
+├── content/
+│   ├── notices/
+│   └── activities/
+├── public/
+│   ├── images/
+│   └── files/
+├── docs/
+│   └── posting-guide.md
 └── README.md
+```
+
+## 실행 방법
+
+최초 1회 의존성을 설치합니다.
+
+```bash
+npm install
+```
+
+개발 서버 실행:
+
+```bash
+npm run dev
+```
+
+정적 빌드:
+
+```bash
+npm run build
+```
+
+빌드 결과 미리보기:
+
+```bash
+npm run preview
 ```
 
 ## 브랜치 전략
 
-- `main`: 운영 배포용 브랜치입니다. GitHub Pages 배포 소스로 사용합니다.
-- `develop`: 개발 작업용 브랜치입니다. 모든 수정은 develop에서 진행합니다.
+- `main`: 운영 배포용 브랜치입니다.
+- `develop`: 개발 작업용 브랜치입니다.
+- 모든 작업은 develop에서 진행합니다.
 - 사용자의 검토 및 승인 전에는 main으로 merge하지 않습니다.
-- main에는 직접 commit하지 않습니다.
 
-권장 작업 흐름:
+권장 흐름:
 
 ```bash
 git switch develop
 git pull --rebase origin develop
-# 작업 및 테스트
+npm install
+npm run build
 git add .
-git commit -m "refactor: improve homepage quality"
+git commit -m "작업 내용"
 git push origin develop
 ```
 
-이후 GitHub에서 develop → main Pull Request를 만들고 검토 후 병합합니다.
-
 ## GitHub Pages 배포
 
-1. develop에서 작업을 완료하고 검토를 받습니다.
-2. develop을 main으로 병합합니다.
-3. GitHub 저장소의 `Settings` → `Pages`에서 배포 소스를 확인합니다.
-4. 배포 소스는 `main` 브랜치의 `/root`를 사용합니다.
+이 프로젝트는 GitHub Actions로 Astro 정적 빌드 결과를 GitHub Pages에 배포하도록 구성합니다.
 
-정적 파일은 상대경로(`./css/style.css`, `./js/app.js`, `./images/...`)를 사용하므로 GitHub Pages 하위 경로에서도 동작합니다.
+- 설정 파일: `.github/workflows/deploy.yml`
+- 배포 브랜치: `main`
+- Astro base path: `/altibase-union-homepage`
 
-## 로컬 미리보기
+운영 반영 절차:
 
-브라우저에서 `index.html`을 직접 열어도 확인할 수 있습니다.
+1. develop에서 작업합니다.
+2. `npm run build`를 통과시킵니다.
+3. develop에 push합니다.
+4. 검토 후 develop을 main으로 merge합니다.
+5. main push 후 GitHub Actions가 Pages 배포를 수행합니다.
 
-로컬 서버로 확인하려면 프로젝트 폴더에서 다음 명령을 실행합니다.
+## Hero 이미지 교체
 
-```bash
-python -m http.server 8000
+Hero 이미지는 다음 파일 하나만 교체하면 됩니다.
+
+```text
+public/images/hero.png
 ```
 
-브라우저에서 `http://localhost:8000`으로 접속합니다.
+권장:
 
-## Hero 이미지 교체 방법
+- 비율: 16:9 또는 21:9
+- 너비: 1600px 이상
+- 텍스트가 이미지 안에 직접 들어가지 않는 이미지
+- 너무 어둡거나 투쟁적인 이미지는 피함
 
-Hero 이미지는 `images/hero.png` 한 장만 교체하면 됩니다.
+## 게시글 추가 방법
 
-- 파일명: `hero.png`
-- 위치: `images/hero.png`
-- 권장 비율: 16:9 또는 21:9
-- PC 높이: 최대 420px 이하
-- 모바일 높이: 최대 320px 이하
+공지사항:
 
-이미지 위에 네이비 계열 오버레이가 적용되어 있으므로, 너무 어둡거나 텍스트가 많은 이미지는 피하는 것이 좋습니다.
-
-## 운영 링크 관리
-
-운영에 필요한 값은 `js/app.js` 상단의 `config` 객체에서 관리합니다.
-
-```js
-const config = {
-  CONSULT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
-  REPORT_FORM_URL: "https://forms.gle/43E4x14eWB6X8oAF7",
-  NAVER_NOTICE_BOARD_URL: "https://cafe.naver.com/altibaseunion",
-  NAVER_ACTIVITY_BOARD_URL: "https://cafe.naver.com/altibaseunion",
-  EMAIL: "altibaseUnion@gmail.com",
-  NAVER_CAFE_URL: "https://cafe.naver.com/altibaseunion",
-  QUICK_LINKS: []
-};
+```text
+content/notices/YYYY-MM-DD-title.md
 ```
 
-링크를 교체할 때는 이 객체의 값만 수정하면 됩니다. 기존 운영 링크를 바꿀 때는 main 병합 전 develop에서 먼저 확인합니다.
+활동보고:
 
-## Quick Links 관리
-
-Quick Links는 `config.QUICK_LINKS` 배열에서 관리합니다.
-
-```js
-{
-  title: "화섬식품노동조합 홈페이지",
-  icon: "building-2",
-  url: "https://kctfu.org/"
-}
+```text
+content/activities/YYYY-MM-DD-title.md
 ```
 
-아이콘은 Lucide Icons 이름을 사용합니다. 링크를 추가하려면 객체를 하나 더 추가하면 됩니다.
+Frontmatter:
 
-## 게시글 데이터
-
-현재는 네이버 카페 공지사항 게시판을 직접 fetch/parse하는 프로토타입이 들어가 있습니다.
-
-- 공지사항 원본 URL: `https://cafe.naver.com/altibaseunion/menu/11`
-- 브라우저 CORS, 네이버 로그인, 카페 접근 정책 때문에 자동 수집은 실패할 수 있습니다.
-- 실패 시 콘솔에 원인을 출력하고 `data/posts.json` fallback 데이터를 표시합니다.
-- fallback JSON도 불러오지 못하면 `js/app.js`의 내장 샘플 데이터를 사용합니다.
-
-현재 fallback 데이터는 다음 위치에서 관리합니다.
-
-- `data/posts.json`: 최근 공지사항 5개, 최근 활동보고 5개
-- `embeddedFallbackPosts`: `data/posts.json` 로드 실패 시 사용하는 최종 fallback
-
-향후 Google Apps Script JSON API를 붙일 때는 `fetchRecentPosts()` 또는 `fetchNaverCafeNoticePosts()` 내부를 교체합니다.
-
-```js
-async function fetchRecentPosts() {
-  // 네이버 카페 직접 fetch가 실패하면 fallback data를 표시합니다.
-}
+```yaml
+---
+title: "게시글 제목"
+date: 2026-07-08
+category: "공지사항"
+summary: "목록에 표시될 요약"
+author: "Altibase 노동조합"
+thumbnail: ""
+pinned: false
+tags: ["태그"]
+draft: false
+slug: "post-slug"
+---
 ```
 
-이번 작업에서는 다음 기능을 구현하지 않습니다.
+`draft: true`인 글은 목록과 상세 페이지에 표시하지 않습니다.
 
-- 네이버 카페 자동 연동
-- Apps Script
-- RSS
+## Content Collections
+
+Content Collections는 `src/content.config.ts`에서 정의합니다.
+
+컬렉션:
+
+- `notices`
+- `activities`
+
+공통 필드:
+
+- `title`
+- `date`
+- `category`
+- `summary`
+- `author`
+- `thumbnail`
+- `pinned`
+- `tags`
+- `draft`
+- `slug`
+
+목록 정렬은 `pinned: true`를 우선 표시하고, 그 다음 최신순으로 표시합니다.
+
+## GPTS + Codex 운영 방식
+
+향후 게시글 운영 흐름:
+
+```text
+사용자
+↓
+GPTS
+↓
+Markdown 생성
+↓
+Codex
+↓
+Git
+↓
+GitHub Pages
+```
+
+상세 작성 규칙은 [docs/posting-guide.md](docs/posting-guide.md)를 참고합니다.
+
+## 이번 구조에서 구현하지 않는 기능
+
 - 검색
+- RSS
+- 태그 페이지
+- 카테고리 페이지
+- 관리자 페이지
 - 로그인
-- 관리자 기능
-
-## 유지보수 체크리스트
-
-- develop 브랜치에서 작업했는지 확인합니다.
-- `index.html`의 상대경로가 `./` 기준인지 확인합니다.
-- `js/app.js` 문법 오류가 없는지 확인합니다.
-- 공지사항 5개, 활동보고 5개, Quick Links가 표시되는지 확인합니다.
-- 모바일에서 Hero와 카드가 겹치지 않는지 확인합니다.
-- 운영 배포 전 `config` 링크가 의도한 운영 URL인지 확인합니다.
+- DB
+- Apps Script
+- 네이버 카페 자동 연동
+- CMS

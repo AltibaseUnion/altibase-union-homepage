@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatDate, sortPosts } from "../../data/site";
+
+const posts = sortPosts(await getCollection("activities", ({ data }) => !data.draft));
+---
+
+<BaseLayout title="활동보고" description="Altibase 노동조합 활동보고 목록">
+  <section class="page-header">
+    <div class="container">
+      <p class="section-eyebrow">Activity</p>
+      <h1>활동보고</h1>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container">
+      <div class="content-list">
+        {posts.map((post) => (
+          <a class="content-card" href={`${import.meta.env.BASE_URL}activities/${post.data.slug}/`}>
+            <div>
+              <p class="section-eyebrow">{post.data.category}</p>
+              <h2>{post.data.title}</h2>
+              <p>{post.data.summary}</p>
+            </div>
+            <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
