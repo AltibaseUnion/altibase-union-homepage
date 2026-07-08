@@ -9,8 +9,8 @@ const posts = sortPosts(await getCollection("activities", ({ data }) => !data.dr
 <BaseLayout title="활동보고" description="Altibase 노동조합 활동보고 목록">
   <section class="page-header">
     <div class="container">
-      <p class="section-eyebrow">Activity</p>
       <h1>활동보고</h1>
+      <p>최근 노동조합 활동과 주요 진행 사항을 확인할 수 있습니다.</p>
     </div>
   </section>
 
@@ -20,11 +20,14 @@ const posts = sortPosts(await getCollection("activities", ({ data }) => !data.dr
         {posts.map((post) => (
           <a class="content-card" href={`${import.meta.env.BASE_URL}activities/${post.data.slug}/`}>
             <div>
-              <p class="section-eyebrow">{post.data.category}</p>
               <h2>{post.data.title}</h2>
               <p>{post.data.summary}</p>
+              <div class="content-meta">
+                <span>{post.data.category}</span>
+                <span aria-hidden="true">·</span>
+                <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+              </div>
             </div>
-            <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
           </a>
         ))}
       </div>

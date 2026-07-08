@@ -238,7 +238,7 @@ a {
 .post-list,
 .content-list {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .post-item,
@@ -256,11 +256,8 @@ a {
 }
 
 .content-card {
-  align-items: flex-start;
-  display: flex;
-  gap: 18px;
-  justify-content: space-between;
-  padding: 22px;
+  display: block;
+  padding: 24px;
 }
 
 .post-item:hover,
@@ -290,19 +287,24 @@ a {
 
 .content-card h2 {
   color: var(--union-navy);
-  font-size: 1.25rem;
-  margin-bottom: 8px;
+  font-size: 1.28rem;
+  margin-bottom: 10px;
 }
 
 .content-card p {
   color: var(--union-muted);
+  line-height: 1.72;
   margin: 0;
 }
 
-.content-card time {
+.content-meta {
+  align-items: center;
   color: var(--union-muted);
-  flex: 0 0 auto;
-  font-size: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.86rem;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .post-meta {
@@ -415,7 +417,7 @@ a {
 .page-header {
   background: #fff;
   border-bottom: 1px solid var(--union-border);
-  padding: 44px 0;
+  padding: 50px 0;
 }
 
 .page-header h1,
@@ -423,6 +425,13 @@ a {
   color: var(--union-navy);
   font-weight: 800;
   margin: 0;
+}
+
+.page-header p {
+  color: var(--union-muted);
+  line-height: 1.75;
+  margin: 12px 0 0;
+  max-width: 680px;
 }
 
 .article-page {
@@ -441,7 +450,7 @@ a {
   flex-wrap: wrap;
   font-size: 0.88rem;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .breadcrumb-nav a {
@@ -454,7 +463,8 @@ a {
 }
 
 .article-header {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
+  padding: 30px;
 }
 
 .article-badge {
@@ -465,7 +475,7 @@ a {
   display: inline-flex;
   font-size: 0.8rem;
   font-weight: 800;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   padding: 6px 11px;
 }
 
@@ -478,8 +488,8 @@ a {
   display: flex;
   flex-wrap: wrap;
   font-size: 0.92rem;
-  gap: 14px;
-  margin-top: 14px;
+  gap: 10px 18px;
+  margin-top: 18px;
 }
 
 .article-meta span {
@@ -499,14 +509,14 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 .tag-badge {
-  background: #f6f8fc;
-  border: 1px solid var(--union-border);
+  background: #eef4ff;
+  border: 1px solid rgba(23, 78, 166, 0.12);
   border-radius: 999px;
-  color: var(--union-muted);
+  color: var(--union-blue);
   font-size: 0.82rem;
   font-weight: 700;
   padding: 5px 10px;
@@ -515,8 +525,8 @@ a {
 .article-header p:last-child {
   color: var(--union-muted);
   font-size: 1.05rem;
-  line-height: 1.75;
-  margin: 16px 0 0;
+  line-height: 1.8;
+  margin: 20px 0 0;
 }
 
 .article-hero-image {
@@ -534,6 +544,7 @@ a {
 .article-body {
   font-size: 18px;
   line-height: 1.85;
+  padding: 32px;
 }
 
 .article-body h2,
@@ -542,17 +553,20 @@ a {
   color: var(--union-navy);
   font-weight: 800;
   line-height: 1.35;
-  margin: 2.4rem 0 1rem;
+  margin: 2.8rem 0 1.1rem;
 }
 
 .article-body h2 {
-  border-top: 1px solid var(--union-border);
+  border-bottom: 1px solid var(--union-border);
+  border-left: 4px solid var(--union-blue);
   font-size: 1.55rem;
-  padding-top: 1.8rem;
+  padding: 0 0 0.75rem 0.9rem;
 }
 
 .article-body h3 {
+  border-left: 3px solid rgba(23, 78, 166, 0.35);
   font-size: 1.25rem;
+  padding-left: 0.75rem;
 }
 
 .article-body h4 {
@@ -563,8 +577,21 @@ a {
 .article-body ul,
 .article-body ol,
 .article-body blockquote,
-.article-body table {
+.article-body table,
+.article-body pre {
   margin-bottom: 2rem;
+}
+
+.article-body a {
+  color: var(--union-blue);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.45rem;
 }
 
 .article-body li + li {
@@ -578,6 +605,31 @@ a {
   color: var(--union-navy);
   font-weight: 700;
   padding: 14px 18px;
+}
+
+.article-body code {
+  background: #eef4ff;
+  border: 1px solid rgba(23, 78, 166, 0.12);
+  border-radius: 6px;
+  color: var(--union-navy);
+  font-size: 0.92em;
+  padding: 0.12em 0.34em;
+}
+
+.article-body pre {
+  background: #0f2747;
+  border-radius: var(--radius);
+  color: #f8fbff;
+  line-height: 1.7;
+  overflow-x: auto;
+  padding: 18px 20px;
+}
+
+.article-body pre code {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
 }
 
 .article-body table {
@@ -621,7 +673,7 @@ a {
 }
 
 .article-footer {
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
 .article-actions {
@@ -634,6 +686,9 @@ a {
   align-items: center;
   display: inline-flex;
   gap: 8px;
+  min-height: 42px;
+  padding-left: 18px;
+  padding-right: 18px;
 }
 
 .article-actions svg {
@@ -643,27 +698,69 @@ a {
 
 .article-pager {
   display: grid;
-  gap: 12px;
+  gap: 14px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
-.pager-placeholder {
-  align-items: center;
+.pager-card {
   background: var(--union-surface);
-  border: 1px dashed var(--union-border);
+  border: 1px solid var(--union-border);
+  border-left: 4px solid rgba(23, 78, 166, 0.35);
   border-radius: var(--radius);
-  color: var(--union-muted);
+  box-shadow: var(--shadow-soft);
+  color: var(--union-ink);
   display: flex;
+  flex-direction: column;
   font-weight: 700;
   gap: 8px;
-  justify-content: center;
-  padding: 14px;
+  min-height: 98px;
+  padding: 16px;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
 }
 
-.pager-placeholder svg {
+.pager-card:hover,
+.pager-card:focus {
+  border-color: rgba(23, 78, 166, 0.45);
+  border-left-color: var(--union-blue);
+  box-shadow: 0 14px 28px rgba(15, 39, 71, 0.12);
+  color: var(--union-blue);
+  transform: translateY(-1px);
+}
+
+.pager-card span {
+  align-items: center;
+  color: var(--union-muted);
+  display: inline-flex;
+  font-size: 0.84rem;
+  gap: 6px;
+}
+
+.pager-card strong {
+  color: var(--union-navy);
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.pager-card:hover strong,
+.pager-card:focus strong {
+  color: var(--union-blue);
+}
+
+.pager-card svg {
   height: 17px;
   width: 17px;
+}
+
+.pager-card.is-disabled {
+  background: #f8fafd;
+  box-shadow: none;
+  color: var(--union-muted);
+  cursor: default;
+}
+
+.pager-card.is-disabled strong {
+  color: var(--union-muted);
 }
 
 .btn-primary {
