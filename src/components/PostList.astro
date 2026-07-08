@@ -1,0 +1,35 @@
+---
+import { formatDate } from "../data/site";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  posts: any[];
+  href: string;
+  type: string;
+}
+
+const { eyebrow, title, posts, href, type } = Astro.props;
+---
+
+<section class="section-panel h-100" aria-labelledby={`${type}Heading`}>
+  <div class="panel-heading">
+    <div>
+      <p class="section-eyebrow">{eyebrow}</p>
+      <h3 id={`${type}Heading`}>{title}</h3>
+    </div>
+    <a class="btn btn-outline-primary btn-sm" href={href}>더보기</a>
+  </div>
+  <div class="post-list">
+    {posts.map((post) => (
+      <a class="post-item" href={post.url}>
+        <p class="post-title">{post.data.title}</p>
+        <div class="post-meta">
+          <span>{post.data.category}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

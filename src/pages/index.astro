@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import PostList from "../components/PostList.astro";
+import QuickLinks from "../components/QuickLinks.astro";
+import ConsultSection from "../components/ConsultSection.astro";
+import { siteConfig, sortPosts } from "../data/site";
+
+const notices = sortPosts(await getCollection("notices", ({ data }) => !data.draft)).slice(0, 5);
+const activities = sortPosts(await getCollection("activities", ({ data }) => !data.draft)).slice(0, 3);
+
+const toPostUrl = (collection: string, post: any) => `${import.meta.env.BASE_URL}${collection}/${post.data.slug}/`;
+
+const noticePosts = notices.map((post) => ({ ...post, url: toPostUrl("notices", post) }));
+const activityPosts = activities.map((post) => ({ ...post, url: toPostUrl("activities", post) }));
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section id="news" class="section-pad">
+    <div class="container">
+      <div class="section-heading">
+        <p class="section-eyebrow">Union News</p>
+        <h2>조합소식</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <PostList eyebrow="Notice" title="최근 공지사항" posts={noticePosts} href={`${import.meta.env.BASE_URL}notices/`} type="notice" />
+        </div>
+        <div class="col-lg-6">
+          <PostList eyebrow="Activity" title="최근 활동보고" posts={activityPosts} href={`${import.meta.env.BASE_URL}activities/`} type="activity" />
+        </div>
+      </div>
+
+      <QuickLinks />
+    </div>
+  </section>
+
+  <ConsultSection />
+</BaseLayout>
