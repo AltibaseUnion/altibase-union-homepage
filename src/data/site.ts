@@ -10,7 +10,7 @@ export const siteConfig = {
   quickLinks: [
     {
       title: "화섬식품노동조합 홈페이지",
-      icon: "globe",
+      icon: "home",
       url: "https://kctfu.org/"
     },
     {
@@ -20,7 +20,7 @@ export const siteConfig = {
     },
     {
       title: "법률 상담",
-      icon: "scale",
+      icon: "shield-question",
       url: "https://kctfu.org/bbs/board.php?bo_table=law"
     },
     {

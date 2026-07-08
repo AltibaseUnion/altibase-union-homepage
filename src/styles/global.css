@@ -168,7 +168,7 @@ a {
   background: var(--union-surface);
   border: 1px solid var(--union-border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft);
 }
 
 .section-panel,
@@ -203,17 +203,18 @@ a {
 .post-list,
 .content-list {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .post-item,
 .content-card {
   background: #fff;
-  border: 1px solid #dfe7f2;
+  border: 1px solid #e2eaf5;
   border-radius: var(--radius);
   color: var(--union-ink);
   display: block;
-  padding: 18px 18px;
+  min-height: 92px;
+  padding: 20px 20px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -229,8 +230,8 @@ a {
 .post-item:focus,
 .content-card:hover,
 .content-card:focus {
-  border-color: rgba(23, 78, 166, 0.36);
-  box-shadow: 0 12px 24px rgba(15, 39, 71, 0.1);
+  border-color: rgba(23, 78, 166, 0.42);
+  box-shadow: 0 14px 28px rgba(15, 39, 71, 0.12);
   color: var(--union-ink);
   transform: translateY(-1px);
 }
@@ -238,8 +239,8 @@ a {
 .post-title,
 .content-card h2 {
   color: var(--union-navy);
-  font-size: 1.02rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 800;
   line-height: 1.45;
   margin: 0;
 }
@@ -264,7 +265,7 @@ a {
 .post-meta {
   color: var(--union-muted);
   display: flex;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   gap: 8px;
   margin-top: 10px;
 }
@@ -326,6 +327,10 @@ a {
   height: 24px;
   stroke-width: 2;
   width: 24px;
+}
+
+.icon-box:empty {
+  display: none;
 }
 
 .contact-band {
@@ -719,7 +724,8 @@ a {
   }
 
   .post-item {
-    padding: 17px 16px;
+    min-height: 88px;
+    padding: 18px 16px;
   }
 
   .contact-band .btn {
