@@ -118,7 +118,7 @@ a {
   align-items: center;
   display: grid;
   gap: 28px;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .hero-content {
@@ -144,7 +144,8 @@ a {
   gap: 10px;
 }
 
-.hero-values span {
+.hero-values span,
+.hero-value-link {
   align-items: center;
   background: rgba(255, 255, 255, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -160,72 +161,19 @@ a {
   transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
-.hero-values span:hover {
+.hero-values span:hover,
+.hero-value-link:hover,
+.hero-value-link:focus {
   background: rgba(255, 255, 255, 0.22);
   border-color: rgba(255, 255, 255, 0.46);
   box-shadow: 0 10px 22px rgba(2, 14, 32, 0.18);
+  color: #fff;
 }
 
 .hero-values svg {
   color: var(--union-accent);
   height: 17px;
   width: 17px;
-}
-
-.hero-cta-card {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 10px 22px rgba(2, 14, 32, 0.1);
-  color: var(--union-ink);
-  display: grid;
-  gap: 12px;
-  padding: 20px;
-  transform: translateY(52px);
-}
-
-.hero-cta-card h2 {
-  align-items: center;
-  color: var(--union-navy);
-  display: flex;
-  font-size: 1.16rem;
-  font-weight: 800;
-  gap: 8px;
-  margin: 0 0 5px;
-}
-
-.hero-cta-card p {
-  color: var(--union-muted);
-  font-size: 0.94rem;
-  line-height: 1.58;
-  margin: 0;
-}
-
-.hero-cta-icon {
-  align-items: center;
-  background: rgba(23, 78, 166, 0.08);
-  border: 1px solid rgba(23, 78, 166, 0.1);
-  border-radius: 999px;
-  color: var(--union-blue);
-  display: inline-flex;
-  flex: 0 0 auto;
-  height: 32px;
-  justify-content: center;
-  width: 32px;
-}
-
-.hero-cta-icon svg {
-  height: 17px;
-  width: 17px;
-}
-
-.hero-cta-card .btn {
-  align-items: center;
-  display: inline-flex;
-  justify-content: center;
-  min-height: 42px;
-  width: 100%;
 }
 
 .section-pad {
@@ -909,11 +857,6 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .hero-cta-card {
-    max-width: 460px;
-    transform: none;
-  }
-
   .quick-links-grid {
     grid-template-columns: 1fr;
   }
@@ -970,16 +913,11 @@ a {
     gap: 8px;
   }
 
-  .hero-values span {
+  .hero-values span,
+  .hero-value-link {
     font-size: 0.86rem;
     min-height: 36px;
     padding: 8px 11px;
-  }
-
-  .hero-cta-card {
-    gap: 12px;
-    padding: 18px;
-    width: 100%;
   }
 
   .section-pad,
