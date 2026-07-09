@@ -1,17 +1,39 @@
 ---
+import { siteConfig } from "../data/site";
+
 const base = import.meta.env.BASE_URL;
 ---
 
-<section id="home" class="hero-section d-flex align-items-center" style={`--hero-image: url("${base}images/hero.png")`}>
+<section id="home" class="hero-section d-flex align-items-center">
+  <img
+    class="hero-image"
+    src={`${base}images/hero-union-participation.webp`}
+    alt="여러 조합원이 회의 테이블에 둘러앉아 자료를 보며 논의하는 모습"
+  />
   <div class="container position-relative">
-    <div class="hero-content">
-      <h1 class="hero-title text-white mb-3">Altibase Union</h1>
-      <p class="hero-copy text-white mb-4">조합원과 함께 만드는 협력의 노사관계</p>
-      <div class="hero-values" aria-label="핵심 가치">
-        <span><i data-lucide="shield-check" aria-hidden="true"></i>권익 보호</span>
-        <span><i data-lucide="messages-square" aria-hidden="true"></i>소통과 참여</span>
-        <span><i data-lucide="clipboard-check" aria-hidden="true"></i>투명한 활동</span>
+    <div class="hero-layout">
+      <div class="hero-content">
+        <h1 class="hero-title text-white mb-3">Altibase Union</h1>
+        <p class="hero-copy text-white mb-4">조합원의 권리와 참여를 바탕으로 투명한 활동과 신뢰할 수 있는 정보를 전합니다.</p>
+        <div class="hero-values" aria-label="핵심 가치">
+          <span><i data-lucide="shield-check" aria-hidden="true"></i>권익 보호</span>
+          <span><i data-lucide="messages-square" aria-hidden="true"></i>소통과 참여</span>
+          <span><i data-lucide="clipboard-check" aria-hidden="true"></i>투명한 활동</span>
+        </div>
       </div>
+
+      <aside class="hero-cta-card" aria-labelledby="heroConsultTitle">
+        <span class="hero-cta-icon" aria-hidden="true">
+          <i data-lucide="message-circle"></i>
+        </span>
+        <div>
+          <h2 id="heroConsultTitle">상담 및 제보</h2>
+          <p>익명 제보, 고충 상담, 제도 개선 의견을 안전하게 접수합니다.</p>
+        </div>
+        <a class="btn btn-primary" href={siteConfig.consultFormUrl} target="_blank" rel="noopener noreferrer">
+          상담 및 제보하기
+        </a>
+      </aside>
     </div>
   </div>
 </section>
