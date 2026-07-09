@@ -4,7 +4,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import PostList from "../components/PostList.astro";
 import QuickLinks from "../components/QuickLinks.astro";
-import ConsultSection from "../components/ConsultSection.astro";
 import { siteConfig, sortPosts } from "../data/site";
 
 const notices = sortPosts(await getCollection("notices", ({ data }) => !data.draft)).slice(0, 5);
@@ -36,6 +35,4 @@ const activityPosts = activities.map((post) => ({ ...post, url: toPostUrl("activ
       <QuickLinks />
     </div>
   </section>
-
-  <ConsultSection />
 </BaseLayout>
