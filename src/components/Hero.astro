@@ -11,6 +11,10 @@ const base = import.meta.env.BASE_URL;
     alt="여러 조합원이 회의 테이블에 둘러앉아 자료를 보며 논의하는 모습"
   />
   <div class="container position-relative">
+    <a class="hero-consult-link" href={siteConfig.consultFormUrl} target="_blank" rel="noopener noreferrer">
+      <i data-lucide="shield-question" aria-hidden="true"></i>
+      상담 및 제보하기
+    </a>
     <div class="hero-layout">
       <div class="hero-content">
         <h1 class="hero-title text-white mb-3">Altibase Union</h1>
@@ -19,10 +23,6 @@ const base = import.meta.env.BASE_URL;
           <span><i data-lucide="shield-check" aria-hidden="true"></i>권익 보호</span>
           <span><i data-lucide="messages-square" aria-hidden="true"></i>소통과 참여</span>
           <span><i data-lucide="clipboard-check" aria-hidden="true"></i>투명한 활동</span>
-          <a class="hero-value-link" href={siteConfig.consultFormUrl} target="_blank" rel="noopener noreferrer">
-            <i data-lucide="shield-question" aria-hidden="true"></i>
-            상담 및 제보하기
-          </a>
         </div>
       </div>
     </div>

@@ -83,10 +83,10 @@ a {
 
 .hero-section {
   background: var(--union-navy);
-  max-height: 420px;
-  min-height: 390px;
+  max-height: 370px;
+  min-height: 345px;
   overflow: hidden;
-  padding: 42px 0;
+  padding: 34px 0;
   position: relative;
 }
 
@@ -119,6 +119,7 @@ a {
   display: grid;
   gap: 28px;
   grid-template-columns: minmax(0, 1fr);
+  padding-top: 18px;
 }
 
 .hero-content {
@@ -144,8 +145,7 @@ a {
   gap: 10px;
 }
 
-.hero-values span,
-.hero-value-link {
+.hero-values span {
   align-items: center;
   background: rgba(255, 255, 255, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -161,9 +161,7 @@ a {
   transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
-.hero-values span:hover,
-.hero-value-link:hover,
-.hero-value-link:focus {
+.hero-values span:hover {
   background: rgba(255, 255, 255, 0.22);
   border-color: rgba(255, 255, 255, 0.46);
   box-shadow: 0 10px 22px rgba(2, 14, 32, 0.18);
@@ -171,6 +169,42 @@ a {
 }
 
 .hero-values svg {
+  color: var(--union-accent);
+  height: 17px;
+  width: 17px;
+}
+
+.hero-consult-link {
+  align-items: center;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(2, 14, 32, 0.12);
+  color: #fff;
+  display: inline-flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 14px;
+  position: absolute;
+  right: 12px;
+  top: 0;
+  transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+  z-index: 2;
+}
+
+.hero-consult-link:hover,
+.hero-consult-link:focus {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.52);
+  box-shadow: 0 10px 22px rgba(2, 14, 32, 0.18);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.hero-consult-link svg {
   color: var(--union-accent);
   height: 17px;
   width: 17px;
@@ -849,7 +883,7 @@ a {
 @media (max-width: 991.98px) {
   .hero-section {
     max-height: none;
-    min-height: 360px;
+    min-height: 330px;
   }
 
   .hero-layout {
@@ -887,8 +921,8 @@ a {
   }
 
   .hero-section {
-    min-height: 320px;
-    padding: 30px 0;
+    min-height: 300px;
+    padding: 26px 0;
   }
 
   .hero-section::after {
@@ -898,6 +932,16 @@ a {
 
   .hero-image {
     object-position: 58% center;
+  }
+
+  .hero-consult-link {
+    margin-bottom: 18px;
+    position: static;
+    width: fit-content;
+  }
+
+  .hero-layout {
+    padding-top: 0;
   }
 
   .hero-title {
@@ -913,8 +957,7 @@ a {
     gap: 8px;
   }
 
-  .hero-values span,
-  .hero-value-link {
+  .hero-values span {
     font-size: 0.86rem;
     min-height: 36px;
     padding: 8px 11px;
