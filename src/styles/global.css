@@ -83,10 +83,10 @@ a {
 
 .hero-section {
   background: var(--union-navy);
-  max-height: 370px;
-  min-height: 345px;
+  max-height: 320px;
+  min-height: 292px;
   overflow: hidden;
-  padding: 34px 0;
+  padding: 28px 0;
   position: relative;
 }
 
@@ -119,11 +119,10 @@ a {
   display: grid;
   gap: 28px;
   grid-template-columns: minmax(0, 1fr);
-  padding-top: 18px;
 }
 
 .hero-content {
-  max-width: 680px;
+  max-width: 620px;
 }
 
 .hero-title {
@@ -189,8 +188,8 @@ a {
   min-height: 38px;
   padding: 8px 14px;
   position: absolute;
-  right: 12px;
-  top: 0;
+  right: 24px;
+  top: 22px;
   transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
   z-index: 2;
 }
@@ -883,7 +882,7 @@ a {
 @media (max-width: 991.98px) {
   .hero-section {
     max-height: none;
-    min-height: 330px;
+    min-height: 300px;
   }
 
   .hero-layout {
@@ -921,8 +920,8 @@ a {
   }
 
   .hero-section {
-    min-height: 300px;
-    padding: 26px 0;
+    min-height: 0;
+    padding: 30px 0;
   }
 
   .hero-section::after {
@@ -935,13 +934,9 @@ a {
   }
 
   .hero-consult-link {
-    margin-bottom: 18px;
+    margin: 0 0 18px;
     position: static;
     width: fit-content;
-  }
-
-  .hero-layout {
-    padding-top: 0;
   }
 
   .hero-title {
