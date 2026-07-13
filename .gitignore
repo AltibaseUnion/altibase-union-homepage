@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .astro/
+imports/
 
 .DS_Store
 Thumbs.db
