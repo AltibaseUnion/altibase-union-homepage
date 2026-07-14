@@ -8,6 +8,7 @@ const state = {
 
 const bootWarning = document.querySelector("#bootWarning");
 const uploadForm = document.querySelector("#uploadForm");
+const analyzeButton = document.querySelector("#analyzeButton");
 const metadata = document.querySelector("#metadata");
 const sourceText = document.querySelector("#sourceText");
 const convertedText = document.querySelector("#convertedText");
@@ -57,6 +58,12 @@ function renderIssues(items) {
     .join("");
 }
 
+function showError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  renderIssues([{ level: "error", message }]);
+  setOutput(message);
+}
+
 async function postJson(url, body) {
   const response = await fetch(url, {
     method: "POST",
@@ -68,32 +75,48 @@ async function postJson(url, body) {
   return data;
 }
 
-uploadForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  setOutput("분석 중입니다...");
-  const formData = new FormData(uploadForm);
-  const response = await fetch("/api/analyze", { method: "POST", body: formData });
-  const data = await response.json();
-  if (!response.ok || data.error) {
-    setOutput(data.error || "분석에 실패했습니다.");
-    return;
-  }
+async function analyzeSelectedFile() {
+  try {
+    const fileInput = document.querySelector("#fileInput");
+    if (!fileInput.files.length) {
+      throw new Error("먼저 Markdown 또는 Notion ZIP 파일을 선택해 주세요.");
+    }
+    setOutput("분석 중입니다...");
+    analyzeButton.disabled = true;
+    const formData = new FormData(uploadForm);
+    const response = await fetch("/api/analyze", { method: "POST", body: formData });
+    const data = await response.json();
+    if (!response.ok || data.error) {
+      throw new Error(data.error || "분석에 실패했습니다.");
+    }
 
-  state.sessionId = data.sessionId;
-  state.slug = data.metadata.slug;
-  state.title = data.metadata.title;
-  state.converted = data.converted;
-  state.previewUrl = data.previewUrl;
-  sourceText.value = data.source;
-  convertedText.value = data.converted;
-  renderMetadata(data.metadata);
-  renderIssues(data.issues);
-  validateButton.disabled = false;
-  writeButton.disabled = false;
-  previewLink.href = data.previewUrl;
-  previewLink.classList.remove("disabled");
-  setOutput(`변환 완료: ${data.fileName}\n초안 slug: ${state.slug}`);
+    state.sessionId = data.sessionId;
+    state.slug = data.metadata.slug;
+    state.title = data.metadata.title;
+    state.converted = data.converted;
+    state.previewUrl = data.previewUrl;
+    sourceText.value = data.source;
+    convertedText.value = data.converted;
+    renderMetadata(data.metadata);
+    renderIssues(data.issues);
+    validateButton.disabled = false;
+    writeButton.disabled = false;
+    previewLink.href = data.previewUrl;
+    previewLink.classList.remove("disabled");
+    setOutput(`변환 완료: ${data.fileName}\n초안 slug: ${state.slug}`);
+  } catch (error) {
+    showError(error);
+  } finally {
+    analyzeButton.disabled = false;
+  }
+}
+
+uploadForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  analyzeSelectedFile();
 });
+
+analyzeButton.addEventListener("click", analyzeSelectedFile);
 
 validateButton.addEventListener("click", async () => {
   setOutput("검증 중입니다...");
