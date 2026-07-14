@@ -6,6 +6,7 @@ const state = {
   previewUrl: ""
 };
 
+const bootWarning = document.querySelector("#bootWarning");
 const uploadForm = document.querySelector("#uploadForm");
 const metadata = document.querySelector("#metadata");
 const sourceText = document.querySelector("#sourceText");
@@ -18,6 +19,15 @@ const checkButton = document.querySelector("#checkButton");
 const buildButton = document.querySelector("#buildButton");
 const gitButton = document.querySelector("#gitButton");
 const previewLink = document.querySelector("#previewLink");
+
+if (bootWarning) {
+  if (window.location.protocol.startsWith("http") && window.location.port === "4177") {
+    bootWarning.hidden = true;
+  } else {
+    bootWarning.innerHTML =
+      '관리 앱 주소가 아닐 수 있습니다. 프로젝트 폴더에서 <strong>npm run content:app</strong>을 실행한 뒤 <strong>http://localhost:4177</strong>로 접속해 주세요.';
+  }
+}
 
 function setOutput(value) {
   output.textContent = typeof value === "string" ? value : JSON.stringify(value, null, 2);
