@@ -408,6 +408,18 @@ async function route(req, res) {
   }
 }
 
-createServer(route).listen(port, () => {
+const server = createServer(route);
+
+server.on("error", (error) => {
+  if (error.code === "EADDRINUSE") {
+    console.error(`Union Publisher Lite is already running or port ${port} is in use.`);
+    console.error(`Open http://localhost:${port} in your browser, or stop the existing Node process before running again.`);
+    console.error(`Windows PowerShell: Get-NetTCPConnection -LocalPort ${port} | Select-Object -ExpandProperty OwningProcess -Unique | ForEach-Object { Stop-Process -Id $_ -Force }`);
+    process.exit(1);
+  }
+  throw error;
+});
+
+server.listen(port, () => {
   console.log(`Union Publisher Lite: http://localhost:${port}`);
 });
