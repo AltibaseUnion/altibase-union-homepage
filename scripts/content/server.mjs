@@ -72,25 +72,52 @@ function parseMultipart(buffer, contentType) {
   return parts;
 }
 
-function extractZip(buffer) {
+function decodeZipName(buffer, utf8) {
+  return buffer.toString(utf8 ? "utf8" : "latin1");
+}
+
+function extractZip(buffer, depth = 0) {
   const entries = [];
-  let offset = 0;
-  while (offset < buffer.length - 30) {
-    if (buffer.readUInt32LE(offset) !== 0x04034b50) {
-      offset += 1;
-      continue;
+  let eocd = -1;
+  for (let index = buffer.length - 22; index >= 0; index -= 1) {
+    if (buffer.readUInt32LE(index) === 0x06054b50) {
+      eocd = index;
+      break;
     }
-    const method = buffer.readUInt16LE(offset + 8);
-    const compressedSize = buffer.readUInt32LE(offset + 18);
-    const fileNameLength = buffer.readUInt16LE(offset + 26);
-    const extraLength = buffer.readUInt16LE(offset + 28);
-    const fileName = buffer.slice(offset + 30, offset + 30 + fileNameLength).toString("utf8");
-    const dataStart = offset + 30 + fileNameLength + extraLength;
-    const data = buffer.slice(dataStart, dataStart + compressedSize);
-    offset = dataStart + compressedSize;
+  }
+  if (eocd === -1) throw new Error("ZIP 중앙 디렉터리를 찾지 못했습니다.");
+
+  const entryCount = buffer.readUInt16LE(eocd + 10);
+  let offset = buffer.readUInt32LE(eocd + 16);
+  for (let index = 0; index < entryCount; index += 1) {
+    if (buffer.readUInt32LE(offset) !== 0x02014b50) break;
+    const flags = buffer.readUInt16LE(offset + 8);
+    const method = buffer.readUInt16LE(offset + 10);
+    const compressedSize = buffer.readUInt32LE(offset + 20);
+    const fileNameLength = buffer.readUInt16LE(offset + 28);
+    const extraLength = buffer.readUInt16LE(offset + 30);
+    const commentLength = buffer.readUInt16LE(offset + 32);
+    const localHeaderOffset = buffer.readUInt32LE(offset + 42);
+    const fileName = decodeZipName(buffer.slice(offset + 46, offset + 46 + fileNameLength), Boolean(flags & 0x0800));
+    offset += 46 + fileNameLength + extraLength + commentLength;
+
     if (!fileName || fileName.endsWith("/")) continue;
-    if (method === 0) entries.push({ name: fileName, data });
-    if (method === 8) entries.push({ name: fileName, data: inflateRawSync(data) });
+    if (buffer.readUInt32LE(localHeaderOffset) !== 0x04034b50) continue;
+
+    const localFileNameLength = buffer.readUInt16LE(localHeaderOffset + 26);
+    const localExtraLength = buffer.readUInt16LE(localHeaderOffset + 28);
+    const dataStart = localHeaderOffset + 30 + localFileNameLength + localExtraLength;
+    const compressed = buffer.slice(dataStart, dataStart + compressedSize);
+    let data;
+    if (method === 0) data = compressed;
+    if (method === 8) data = inflateRawSync(compressed);
+    if (!data) continue;
+
+    if (fileName.toLowerCase().endsWith(".zip") && depth < 3) {
+      entries.push(...extractZip(data, depth + 1));
+    } else {
+      entries.push({ name: fileName, data });
+    }
   }
   return entries;
 }
@@ -163,7 +190,7 @@ function rewriteImages(markdown, imageMap, slug) {
 function convertBody(markdown) {
   const body = normalizeTerms(stripFrontmatter(markdown))
     .replace(/^\uFEFF?\s*#\s+.+\r?\n?/, "")
-    .replace(/^#{2,6}\s+/gm, "### ")
+    .replace(/^#{1,6}\s+/gm, "### ")
     .trim();
   return `## 요약\n\n${summarize(markdown)}\n\n## 주요 활동\n\n${body || "### 활동 내역\n\n- 원문 내용을 확인해 활동 내역을 보완해 주세요."}\n`;
 }

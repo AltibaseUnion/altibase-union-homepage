@@ -28,6 +28,8 @@ npm run dev
 
 ZIP 안에 이미지가 있으면 `public/images/activities/{slug}/` 경로로 정리하고 Markdown 이미지 경로를 활동보고 상세 페이지 기준 상대 경로로 변환합니다.
 
+Notion 내보내기에서 `ExportBlock-...Part-1.zip`처럼 ZIP 안에 다시 ZIP이 들어 있는 경우도 자동으로 풀어 처리합니다.
+
 ## 변환 규칙
 
 - 새 게시물은 `draft: true`로 생성합니다.
