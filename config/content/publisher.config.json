@@ -1,0 +1,9 @@
+{
+  "contentRoot": "content/activities",
+  "publicImageRoot": "public/images/activities",
+  "previewBaseUrl": "http://localhost:4321/altibase-union-homepage",
+  "defaultAuthor": "Altibase 노동조합",
+  "defaultCategory": "활동보고",
+  "branchPrefix": "content/activity-",
+  "draftPullRequestBase": "main"
+}
